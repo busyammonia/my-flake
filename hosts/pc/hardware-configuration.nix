@@ -55,22 +55,6 @@
   };
 
   hardware.cpu.intel.updateMicrocode = true;
-  services.fstrim.enable = true;
-  services.zfs = {
-    trim = { enable = true; };
-    autoScrub = {
-      enable = true;
-      interval = "weekly";
-    };
-  };
-
-  boot.zfs = {
-    enableUnstable = true;
-    removeLinuxDRM = true;
-    allowHibernation = false;
-    forceImportRoot = true;
-    forceImportAll = true;
-  };
 
   boot.initrd = {
     clevis = { enable = true; };
