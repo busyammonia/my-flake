@@ -1,7 +1,7 @@
-{ disks, ... }: {
+{ disks, ... }: let pcName = "pc"; in {
   disko.devices = {
     disk = {
-      pc-main = {
+      "${pcName}-main" = {
         type = "disk";
         device = builtins.elemAt disks 0;
         content = {
@@ -19,6 +19,7 @@
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
+                mountOptions = ["-n ${pcName}-EFI"];
               };
             };
             root = {
@@ -28,6 +29,7 @@
                 format = "f2fs";
                 extraArgs = [
                   "-O extra_attr,inode_checksum,sb_checksum,compression,encrypt"
+                  "-l ${pcName}-root"
                 ];
                 mountOptions = [
                   "defaults"
