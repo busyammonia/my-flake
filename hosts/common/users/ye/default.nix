@@ -34,6 +34,7 @@ in {
       "dialout"
       "network"
       "flashrom"
+      "disk"
     ];
 
     initialPassword = "test";
