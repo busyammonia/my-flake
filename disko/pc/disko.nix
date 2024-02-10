@@ -9,10 +9,12 @@
           efiGptPartitionFirst = false;
           partitions = {
             boot = {
+              priority = 1;
               size = "1M";
               type = "EF02"; # for grub MBR
             };
             ESP = {
+              priority = 2;
               size = "512M";
               type = "EF00";
               content = {
