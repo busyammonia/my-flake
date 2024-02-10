@@ -19,7 +19,6 @@
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = ["-n ${pcName}-EFI"];
               };
             };
             root = {
