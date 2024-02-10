@@ -74,7 +74,7 @@
     };
 
     "/boot" = {
-      device = "/dev/disk/by-partlabel/disk-pc-main-efi";
+      device = "/dev/disk/by-partlabel/disk-pc-main-ESP";
       fsType = "vfat";
       neededForBoot = true;
     };
