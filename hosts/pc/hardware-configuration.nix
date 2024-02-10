@@ -54,7 +54,8 @@
     "LIBVA_DRIVER_NAME" = "radeonsi";
   };
 
-  hardware.cpu.intel.updateMicrocode = true;
+  hardware.cpu.intel.updateMicrocode = false;
+  hardware.cpu.amd.updateMicrocode = false;
 
   boot.initrd = {
     clevis = { enable = true; };
