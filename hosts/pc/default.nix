@@ -35,6 +35,18 @@
 
   programs.adb.enable = true;
 
+  programs.ssh = {
+    enable = true;
+    startAgent = true;
+    setXAuthLocation = true;
+  };
+
+  environment = {
+    sessionVariables = {
+      SSH_ASKPASS_REQUIRE="prefer";
+    };
+  };
+
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
   networking.firewall.enable = false;
   networking.hostName = "pc";
