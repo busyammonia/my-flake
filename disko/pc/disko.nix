@@ -31,7 +31,7 @@
                 ];
                 mountOptions = [
                   "defaults"
-                  "compress_algorithm=zstd"
+                  "compress_algorithm=zstd:9"
                   "compress_chksum"
                   "atgc"
                   "gc_merge"
