@@ -40,6 +40,15 @@
                   "inlinecrypt"
                   "compress_cache"
                   "age_extent_cache"
+                  "flush_merge"
+                  "background_gc=on"
+                  "discard"
+                  "no_heap"
+                  "user_xattr"
+                  "inline_xattr"
+                  "acl"
+                  "inline_data"
+                  "inline_dentry"
                 ];
                 mountpoint = "/nix";
               };
