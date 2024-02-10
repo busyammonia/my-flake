@@ -20,6 +20,5 @@
     "vboxsf"
     "vfat"
     "xfs"
-    "zfs"
   ];
 }
