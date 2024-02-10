@@ -26,11 +26,21 @@
               content = {
                 type = "filesystem";
                 format = "f2fs";
-                extraArgs = ["-O extra_attr,inode_checksum,sb_checksum,compression,encrypt"];
-                mountOptions = ["defaults" "compress_algorithm=zstd:9" "compress_chksum" "atgc" "gc_merge" "lazytime" "checkpoint_merge"];
+                extraArgs = [
+                  "-O extra_attr,inode_checksum,sb_checksum,compression,encrypt"
+                ];
+                mountOptions = [
+                  "defaults"
+                  "compress_algorithm=zstd:9"
+                  "compress_chksum"
+                  "atgc"
+                  "gc_merge"
+                  "lazytime"
+                  "checkpoint_merge"
+                ];
                 mountpoint = "/nix";
               };
-            };            
+            };
           };
         };
       };
