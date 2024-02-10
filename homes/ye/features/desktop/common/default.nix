@@ -1,8 +1,6 @@
 { pkgs, inputs, ... }: {
   home.packages = let genpw = pkgs.writeShellScriptBin "genpw" "${pkgs.diceware}/bin/diceware -n 3 -d _ | tr '[:lower:]' '[:upper:]' | tr '_' 'z' | tr '\n' 'z'"; in with pkgs; [
     zotero
-    inputs.nix-gaming.packages.${pkgs.system}.wine-ge
-    bottles
     nekoray
     genpw
     telegram-desktop
