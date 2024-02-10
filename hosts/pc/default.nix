@@ -36,7 +36,6 @@
   programs.adb.enable = true;
 
   programs.ssh = {
-    enable = true;
     startAgent = true;
     setXAuthLocation = true;
   };
