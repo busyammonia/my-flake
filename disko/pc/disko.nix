@@ -37,6 +37,9 @@
                   "gc_merge"
                   "lazytime"
                   "checkpoint_merge"
+                  "inlinecrypt"
+                  "compress_cache"
+                  "age_extent_cache"
                 ];
                 mountpoint = "/nix";
               };
