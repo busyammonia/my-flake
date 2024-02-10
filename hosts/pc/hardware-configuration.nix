@@ -3,9 +3,7 @@
     "${inputs.nixpkgs}/nixos/modules/profiles/all-hardware.nix"
     "${inputs.nixpkgs}/nixos/modules/profiles/qemu-guest.nix"
 
-    ../common/fstab/data.nix
-    ../common/fstab/zfs.nix
-    ../common/fstab/impermanence.nix
+    ./fstab.nix
   ];
   boot = {
     initrd = {
@@ -74,5 +72,5 @@
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 }
