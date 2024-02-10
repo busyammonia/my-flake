@@ -1,0 +1,7 @@
+{ config, ... }: {
+  boot = {
+    kernelParams = [
+      "threadirqs"
+    ];
+  };
+}
