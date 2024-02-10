@@ -25,4 +25,8 @@
     pinentry-program ${pkgs.kwalletcli}/bin/pinentry-kwallet
     '';
   };
+
+  programs.ssh = {
+    enable = true;
+  };
 }
