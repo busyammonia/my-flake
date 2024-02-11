@@ -124,7 +124,16 @@ in {
           persist = {
             type = "zfs_fs";
             mountpoint = "/persist";
-            options = { mountpoint = "/persist"; };
+            options = {
+              compression = "zstd-15";
+              mountpoint = "/persist";
+            };
+          };
+
+          zhome = {
+            type = "zfs_fs";
+            mountpoint = "/zhome";
+            options = { mountpoint = "/zhome"; };
           };
         };
       };
