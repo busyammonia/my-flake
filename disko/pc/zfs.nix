@@ -1,9 +1,10 @@
 { disks, pcName, ... }:
 let
-  partlabelBioscompat = "bios";
-  labelBioscompat = "${builtins.substring 0 6 "${pcName}"}-BIOS";
+  addSuffix = (str: suffix: maxLength: sep: builtins.substring 0 maxLength (builtins.substring 0 (maxLength - builtins.stringLength sep - builtins.stringLength suffix) str + sep + suffix));
+  partlabelBioscompat = "BIOS";
+  labelBioscompat = addSuffix pcName partlabelBioscompat 11 "-";
   partlabelEfi = "ESP";
-  labelEfi = "${builtins.substring 0 7 "${pcName}"}-ESP";
+  labelEfi = addSuffix pcName partlabelEfi 11 "-";
   partlabelCrypt = "crypt";
   labelCrypt = "${pcName}-zfs";
   labelZfsPool = "${pcName}-zroot";
