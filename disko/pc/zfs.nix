@@ -1,10 +1,11 @@
 { disks, pcName, ... }:
 let
-  partlabelBioscompat = "${pcName}-BIOSCOMPAT";
-  partlabelEfi = "${pcName}-EFI";
-  labelEfi = "${builtins.substring 0 7 "${pcName}"}-EFI";
-  partlabelCrypt = "${pcName}-crypt";
-  labelCrypt = "${pcName}-zfs";
+  partlabelBioscompat = "bios";
+  labelBioscompat = "${builtins.substring 0 6 "${pcName}"}-BIOS";
+  partlabelEfi = "ESP";
+  labelEfi = "${builtins.substring 0 7 "${pcName}"}-ESP";
+  partlabelCrypt = "crypt";
+  labelCrypt = "zfs";
   labelZfsPool = "${pcName}-zroot";
 in {
   disko.devices = {
@@ -20,9 +21,11 @@ in {
               priority = 1;
               type = "EF00";
               size = "32M";
+              name = partlabelBioscompat;
               content = {
                 type = "filesystem";
                 format = "vfat";
+                extraArgs = ["-n ${labelBioscompat}"];
                 mountpoint = null;
               };
               hybrid = {
@@ -38,6 +41,7 @@ in {
               content = {
                 type = "filesystem";
                 format = "vfat";
+                extraArgs = ["-n ${labelEfi}"];
                 mountpoint = "/boot";
               };
             };
