@@ -91,7 +91,7 @@ in {
 
         options = {
           ashift = "13";
-          autotrim = "on";
+          autotrim = "off";
           listsnapshots = "on";
         };
 
