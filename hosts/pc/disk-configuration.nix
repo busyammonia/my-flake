@@ -1,4 +1,4 @@
-{ inputs, outputs, config, pkgs, ... }: {
+{ inputs, outputs, config, pkgs, ... }: let pcName = "pc"; in {
   imports = [ inputs.impermanence.nixosModules.impermanence ];
   programs.fuse.userAllowOther = true;
 
@@ -34,7 +34,7 @@
   boot = {
     initrd = {
       luks.devices."pc-zfs" = {
-        device = "/dev/disk/by-partlabel/disk-pc-main-pc-crypt";
+        device = "/dev/disk/by-partlabel/disk-${pcName}-main-crypt";
         allowDiscards = true;
       };
     };
@@ -97,27 +97,27 @@
     };
 
     "/boot" = {
-      device = "/dev/disk/by-partlabel/disk-pc-main-ESP";
+      device = "/dev/disk/by-partlabel/disk-${pcName}-main-ESP";
       fsType = "vfat";
       neededForBoot = true;
     };
 
     "/nix" = {
-      device = "pc-zroot/nix";
+      device = "${pcName}-zroot/nix";
       fsType = "zfs";
       options = [ "nodiratime" "noatime" "norelatime" "noxattr" ];
       neededForBoot = true;
     };
 
     "/persist" = {
-      device = "pc-zroot/persist";
+      device = "${pcName}-zroot/persist";
       fsType = "zfs";
       options = [ "relatime" "nodiratime" "noatime" "xattr" "posixacl" ];
       neededForBoot = true;
     };
 
     "/zhome" = {
-      device = "pc-zroot/zhome";
+      device = "${pcName}-zroot/zhome";
       fsType = "zfs";
       options = [ "relatime" "xattr" "posixacl" ];
       neededForBoot = true;
