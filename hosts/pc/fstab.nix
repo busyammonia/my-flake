@@ -2,7 +2,7 @@
   imports = [ inputs.impermanence.nixosModules.impermanence ];
   programs.fuse.userAllowOther = true;
 
-  environment.persistence."/nix/persist" = {
+  environment.persistence."/persist" = {
     hideMounts = true;
     directories = [
       "/var/log"

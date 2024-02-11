@@ -61,36 +61,36 @@ in {
 
   systemd.tmpfiles = {
     rules = [
-      "d /nix/persist/home/ye/ 0750 ye ye -"
-      "d /nix/persist/home/ye/Downloads 0750 ye ye -"
-      "d /nix/persist/home/ye/Music 0750 ye ye -"
-      "d /nix/persist/home/ye/Pictures 0750 ye ye -"
-      "d /nix/persist/home/ye/Documents 0750 ye ye -"
-      "d /nix/persist/home/ye/Videos 0750 ye ye -"
-      ''d "/nix/persist/home/ye/VirtualBox VMs" 0750 ye ye -''
-      "d /nix/persist/home/ye/VM 0750 ye ye -"
-      "d /nix/persist/home/ye/Templates 0750 ye ye -"
-      "d /nix/persist/home/ye/Public 0750 ye ye -"
-      "d /nix/persist/home/ye/Desktop 0750 ye ye -"
-      "d /nix/persist/home/ye/NixConfig 0750 ye ye -"
-      "d /nix/persist/home/ye/.local 0750 ye ye -"
-      "d /nix/persist/home/ye/.config 0750 ye ye -"
-      "d /nix/persist/home/ye/.gnupg 0750 ye ye -"
-      "d /nix/persist/home/ye/.ssh 0750 ye ye -"
-      "d /nix/persist/home/ye/.nixops 0750 ye ye -"
-      "d /nix/persist/home/ye/.vscode 0750 ye ye -"
-      "d /nix/persist/home/ye/.vscode-insiders 0750 ye ye -"
-      "d /nix/persist/home/ye/.vscodium 0750 ye ye -"
+      "d /zhome/ye/ 0750 ye ye -"
+      "d /zhome/ye/Downloads 0750 ye ye -"
+      "d /zhome/ye/Music 0750 ye ye -"
+      "d /zhome/ye/Pictures 0750 ye ye -"
+      "d /zhome/ye/Documents 0750 ye ye -"
+      "d /zhome/ye/Videos 0750 ye ye -"
+      ''d "/zhome/ye/VirtualBox VMs" 0750 ye ye -''
+      "d /zhome/ye/VM 0750 ye ye -"
+      "d /zhome/ye/Templates 0750 ye ye -"
+      "d /zhome/ye/Public 0750 ye ye -"
+      "d /zhome/ye/Desktop 0750 ye ye -"
+      "d /zhome/ye/NixConfig 0750 ye ye -"
+      "d /zhome/ye/.local 0750 ye ye -"
+      "d /zhome/ye/.config 0750 ye ye -"
+      "d /zhome/ye/.gnupg 0750 ye ye -"
+      "d /zhome/ye/.ssh 0750 ye ye -"
+      "d /zhome/ye/.nixops 0750 ye ye -"
+      "d /zhome/ye/.vscode 0750 ye ye -"
+      "d /zhome/ye/.vscode-insiders 0750 ye ye -"
+      "d /zhome/ye/.vscodium 0750 ye ye -"
 
-      "d /nix/persist/home/ye/.local/share 0750 ye ye -"
-      "d /nix/persist/home/ye/.local/share/keyrings 0750 ye ye -"
-      "d /nix/persist/home/ye/.local/share/direnv 0750 ye ye -"
-      "d /nix/persist/home/ye/.local/bin 0750 ye ye -"
+      "d /zhome/ye/.local/share 0750 ye ye -"
+      "d /zhome/ye/.local/share/keyrings 0750 ye ye -"
+      "d /zhome/ye/.local/share/direnv 0750 ye ye -"
+      "d /zhome/ye/.local/bin 0750 ye ye -"
 
-      "d /nix/persist/home/ye/.config 0750 ye ye -"
-      ''d /nix/persist/home/ye/.config/Code 0750 ye ye -''
-      ''d /nix/persist/home/ye/.config/"Code - Insiders" 0750 ye ye -''
-      ''d /nix/persist/home/ye/.config/VSCodium 0750 ye ye -''
+      "d /zhome/ye/.config 0750 ye ye -"
+      ''d /zhome/ye/.config/Code 0750 ye ye -''
+      ''d /zhome/ye/.config/"Code - Insiders" 0750 ye ye -''
+      ''d /zhome/ye/.config/VSCodium 0750 ye ye -''
     ];
   };
 }

@@ -40,7 +40,7 @@
     stateVersion = lib.mkDefault "23.11";
 
     persistence = {
-      "/nix/persist/${config.home.homeDirectory}" = {
+      "/zhome/${config.home.username}" = {
         directories = [
           "Downloads"
           "Music"
