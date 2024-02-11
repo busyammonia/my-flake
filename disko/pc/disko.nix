@@ -12,11 +12,13 @@
               priority = 1;
               size = "1M";
               type = "EF02"; # for grub MBR
+              name = "bioscompat";
             };
             ESP = {
               priority = 2;
               size = "512M";
               type = "EF00";
+              name = "ESP";
               content = {
                 type = "filesystem";
                 format = "vfat";
@@ -25,6 +27,7 @@
             };
             root = {
               size = "100%";
+              name = "root";
               content = {
                 type = "filesystem";
                 format = "f2fs";
