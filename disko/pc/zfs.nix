@@ -5,7 +5,7 @@ let
   partlabelEfi = "ESP";
   labelEfi = "${builtins.substring 0 7 "${pcName}"}-ESP";
   partlabelCrypt = "crypt";
-  labelCrypt = "zfs";
+  labelCrypt = "${pcName}-zfs";
   labelZfsPool = "${pcName}-zroot";
 in {
   disko.devices = {
