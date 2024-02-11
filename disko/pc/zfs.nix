@@ -1,13 +1,35 @@
 { disks, pcName, ... }:
 let
-  addSuffix = (str: suffix: maxLength: sep: builtins.substring 0 maxLength (builtins.substring 0 (maxLength - builtins.stringLength sep - builtins.stringLength suffix) str + sep + suffix));
-  partlabelBioscompat = "BIOS";
-  labelBioscompat = addSuffix pcName partlabelBioscompat 11 "-";
-  partlabelEfi = "ESP";
-  labelEfi = addSuffix pcName partlabelEfi 11 "-";
-  partlabelCrypt = "crypt";
-  labelCrypt = "${pcName}-zfs";
-  labelZfsPool = "${pcName}-zroot";
+  addSuffix = (maxLength: sep: suffix: str: builtins.substring 0 maxLength (builtins.substring 0 (maxLength - builtins.stringLength sep - builtins.stringLength suffix) str + sep + suffix));
+  zfsPoolName = (sep: suffix: str: str + sep + suffix);
+  signBios = "BIOS";
+  signESP = "ESP";
+  signCrypt = "crypt";
+  signZfs = "zfs";
+  labelBioscompat = addSuffix 11 "-" signBios;
+  labelEfi = addSuffix 11 "-" signESP;
+  labelCrypt = addSuffix 64 "-" signZfs;
+  labelZfsPool = zfsPoolName "-";
+  hddName = "hdd";
+  hddNameWithPc = "${pcName}-${hddName}";
+  main = {
+    partlabelBioscompat = signBios;
+    partlabelEfi = signESP;
+    partlabelCrypt = signCrypt;
+    labelBioscompat = labelBioscompat pcName;
+    labelEfi = labelEfi pcName;
+    labelCrypt = labelCrypt pcName;
+    labelZfsPool = labelZfsPool "zroot" pcName;
+  };
+  hdd = let name = hddNameWithPc; in {
+    partlabelBioscompat = signBios;
+    partlabelEfi = signESP;
+    partlabelCrypt = signCrypt;
+    labelBioscompat = labelBioscompat name;
+    labelEfi = labelEfi name;
+    labelCrypt = labelCrypt name;
+    labelZfsPool = labelZfsPool "zdata" pcName;
+  };
 in {
   disko.devices = {
     disk = {
@@ -22,11 +44,11 @@ in {
               priority = 1;
               type = "EF00";
               size = "32M";
-              name = partlabelBioscompat;
+              name = main.partlabelBioscompat;
               content = {
                 type = "filesystem";
                 format = "vfat";
-                extraArgs = ["-n ${labelBioscompat}"];
+                extraArgs = ["-n ${main.labelBioscompat}"];
                 mountpoint = null;
               };
               hybrid = {
@@ -38,18 +60,18 @@ in {
               priority = 2;
               size = "512M";
               type = "EF00";
-              name = partlabelEfi;
+              name = main.partlabelEfi;
               content = {
                 type = "filesystem";
                 format = "vfat";
-                extraArgs = ["-n ${labelEfi}"];
+                extraArgs = ["-n ${main.labelEfi}"];
                 mountpoint = "/boot";
               };
             };
             root = {
               size = "100%";
               type = "8300";
-              name = partlabelCrypt;
+              name = main.partlabelCrypt;
               content = {
                 type = "luks";
                 extraOpenArgs = [
@@ -57,21 +79,78 @@ in {
                   "--perf-no_write_workqueue"
                   "--perf-no_read_workqueue"
                 ];
-                name = labelCrypt;
+                name = main.labelCrypt;
                 settings = { allowDiscards = true; };
                 content = {
                   type = "zfs";
-                  pool = labelZfsPool;
+                  pool = main.labelZfsPool;
                 };
               };
             };
           };
         };
       };
+      "${hddNameWithPc}" = {
+        type = "disk";
+        device = builtins.elemAt disks 1;
+        content = {
+          type = "gpt";
+          efiGptPartitionFirst = false;          
+          partitions = {
+            compat = {
+              priority = 1;
+              type = "EF00";
+              size = "32M";
+              name = hdd.partlabelBioscompat;
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                extraArgs = ["-n ${hdd.labelBioscompat}"];
+                mountpoint = null;
+              };
+              hybrid = {
+                mbrPartitionType = "0x0c";
+                mbrBootableFlag = false;
+              };
+            };
+            ESP = {
+              priority = 2;
+              size = "512M";
+              type = "EF00";
+              name = hdd.partlabelEfi;
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                extraArgs = ["-n ${hdd.labelEfi}"];
+                mountpoint = "/boot";
+              };
+            };
+            root = {
+              size = "100%";
+              type = "8300";
+              name = hdd.partlabelCrypt;
+              content = {
+                type = "luks";
+                extraOpenArgs = [
+                  "--allow-discards"
+                  "--perf-no_write_workqueue"
+                  "--perf-no_read_workqueue"
+                ];
+                name = hdd.labelCrypt;
+                settings = { allowDiscards = true; };
+                content = {
+                  type = "zfs";
+                  pool = hdd.labelZfsPool;
+                };
+              };
+            };
+          };       
+        };
+      };
     };
     nodev = { "/" = { fsType = "tmpfs"; }; };
     zpool = {
-      "${labelZfsPool}" = {
+      "${main.labelZfsPool}" = {
         type = "zpool";
 
         rootFsOptions = {
@@ -90,12 +169,12 @@ in {
         };
 
         options = {
-          ashift = "13";
+          ashift = "12";
           autotrim = "off";
           listsnapshots = "on";
         };
 
-        mountpoint = "/";
+        mountpoint = "/zdata";
 
         datasets = {
           reservation = {
@@ -139,6 +218,95 @@ in {
             type = "zfs_fs";
             mountpoint = "/zhome";
             options = { mountpoint = "/zhome"; };
+          };
+        };
+      };
+      "${hdd.labelZfsPool}" = {
+        type = "zpool";
+
+        rootFsOptions = {
+          acltype = "posixacl";
+          atime = "off";
+          compression = "zstd-9";
+          dnodesize = "auto";
+          mountpoint = "none";
+          normalization = "formD";
+          relatime = "on";
+          xattr = "sa";
+          "com.sun:auto-snapshot" = "false";
+          canmount = "on";
+          checksum = "blake3";
+          recordsize = "1M";
+        };
+
+        options = {
+          ashift = "12";
+          autotrim = "off";
+          listsnapshots = "on";
+        };
+
+        mountpoint = "/";
+
+        datasets = {
+          reservation = {
+            type = "zfs_fs";
+            mountpoint = null;
+            options = {
+              canmount = "off";
+              refreservation = "100G";
+              primarycache = "none";
+              secondarycache = "none";
+              mountpoint = "none";
+            };
+          };
+
+          share = {
+            type = "zfs_fs";
+            mountpoint = "/Share";
+            options = {
+              mountpoint = "/Share";
+            };
+          };
+
+          trash = {
+            type = "zfs_fs";
+            mountpoint = "/Trash";
+            options = {
+              mountpoint = "/Trash";
+              compression = "zstd-15";
+            };
+          };
+
+          vm = {
+            type = "zfs_fs";
+            mountpoint = "/VM";
+            options = {
+              mountpoint = "/VM";
+            };
+          };
+
+          downloads = {
+            type = "zfs_fs";
+            mountpoint = "/Downloads";
+            options = {
+              mountpoint = "/Downloads";
+            };
+          };
+
+          torrent = {
+            type = "zfs_fs";
+            mountpoint = "/Torrents";
+            options = {
+              mountpoint = "/Torrents";
+            };
+          };
+
+          other = {
+            type = "zfs_fs";
+            mountpoint = "/Other";
+            options = {
+              mountpoint = "/Other";
+            };
           };
         };
       };
