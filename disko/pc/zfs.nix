@@ -116,7 +116,7 @@ in {
             mountpoint = "/nix";
             options = {
               acltype = "off";
-              compression = "zstd-15";
+              compression = "zstd-9";
               relatime = "off";
               atime = "off";
               checksum = "blake3";
@@ -130,7 +130,7 @@ in {
             type = "zfs_fs";
             mountpoint = "/persist";
             options = {
-              compression = "zstd-15";
+              compression = "zstd-9";
               mountpoint = "/persist";
             };
           };
