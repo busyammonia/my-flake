@@ -48,7 +48,7 @@
 
   systemd.enableEmergencyMode = true;
   boot.initrd.systemd.emergencyAccess = true;
-  boot.kernelParams = [ "boot.shell_on_fail" "systemd.setenv=SYSTEMD_SULOGIN_FORCE=1" ];
+  boot.kernelParams = [ "rescue" "boot.shell_on_fail" "systemd.setenv=SYSTEMD_SULOGIN_FORCE=1" ];
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
   networking.firewall.enable = false;
