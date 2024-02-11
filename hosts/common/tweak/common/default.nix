@@ -10,7 +10,7 @@
     ./max-map-count.nix
     ./network.nix
     ./preempt.nix
-    ./quiet.nix
+    ./verbosity.nix
     ./shell-on-fail.nix
     ./unprivileged-clone.nix
     ./random-nocpu.nix
