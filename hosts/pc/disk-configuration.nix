@@ -32,7 +32,13 @@
   };
 
   boot = {
-    supportedFilesystems = [ "f2fs" "vfat" ];
+    initrd = {
+      luks.devices."pc-zfs" = {
+        device = "/dev/disk/by-partlabel/disk-pc-main-pc-crypt";
+        allowDiscards = true;
+      };
+    };
+    supportedFilesystems = [ "zfs" ];
     loader = {
       grub = {
         gfxpayloadEfi = "keep";
@@ -43,6 +49,7 @@
         efiSupport = true;
         device = "nodev";
         copyKernels = true;
+        zfsSupport = true;
         memtest86 = {
           enable = true;
           params = [ "btrace" ];
@@ -66,6 +73,22 @@
     };
   };
 
+  services.zfs = {
+    trim = { enable = true; };
+    autoScrub = {
+      enable = true;
+      interval = "weekly";
+    };
+  };
+
+  boot.zfs = {
+    enableUnstable = true;
+    removeLinuxDRM = true;
+    allowHibernation = false; # Conflicts with force import
+    forceImportRoot = true;
+    forceImportAll = true;
+  };
+
   fileSystems = {
     "/" = {
       device = "none";
@@ -80,29 +103,23 @@
     };
 
     "/nix" = {
-      device = "/dev/disk/by-partlabel/disk-pc-main-root";
-      fsType = "f2fs";
-      options = [
-        "defaults"
-        "compress_algorithm=zstd:9"
-        "compress_chksum"
-        "atgc"
-        "gc_merge"
-        "lazytime"
-        "checkpoint_merge"
-        "inlinecrypt"
-        "compress_cache"
-        "age_extent_cache"
-        "flush_merge"
-        "background_gc=on"
-        "discard"
-        "no_heap"
-        "user_xattr"
-        "inline_xattr"
-        "acl"
-        "inline_data"
-        "inline_dentry"
-      ];
+      device = "pc-zroot/nix";
+      fsType = "zfs";
+      options = [ "nodiratime" "noatime" "norelatime" "noxattr" ];
+      neededForBoot = true;
+    };
+
+    "/persist" = {
+      device = "pc-zroot/persist";
+      fsType = "zfs";
+      options = [ "relatime" "nodiratime" "noatime" "xattr" "posixacl" ];
+      neededForBoot = true;
+    };
+
+    "/zhome" = {
+      device = "pc-zroot/zhome";
+      fsType = "zfs";
+      options = [ "relatime" "xattr" "posixacl" ];
       neededForBoot = true;
     };
   };

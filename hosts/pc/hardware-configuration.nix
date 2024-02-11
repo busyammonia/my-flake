@@ -3,7 +3,7 @@
     "${inputs.nixpkgs}/nixos/modules/profiles/all-hardware.nix"
     "${inputs.nixpkgs}/nixos/modules/profiles/qemu-guest.nix"
 
-    ./fstab.nix
+    ./disk-configuration.nix
   ];
   boot = {
     initrd = {
