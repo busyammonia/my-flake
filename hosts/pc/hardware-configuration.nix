@@ -55,19 +55,6 @@
   hardware.cpu.intel.updateMicrocode = false;
   hardware.cpu.amd.updateMicrocode = false;
 
-  boot.initrd = {
-    clevis = { enable = true; };
-    verbose = false;
-    network = { enable = true; };
-    services = {
-      bcache.enable = true;
-      lvm.enable = true;
-    };
-    luks = { reusePassphrases = true; };
-    checkJournalingFS = true;
-  };
-
-  console.earlySetup = true;
 
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
