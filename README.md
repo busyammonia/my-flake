@@ -30,7 +30,7 @@ nix run github:nix-community/disko -- --mode disko ./disko/pc/disko.nix  --arg t
 Create the persistent directory in `/nix`:
 
 ```
-mkdir /mnt/nix/persistent -p
+mkdir /mnt/nix/persist -p
 ```
 
 Now run `nixos-install`:
