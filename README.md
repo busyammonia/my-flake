@@ -16,7 +16,7 @@ Pick a configuration that suits your preferred target and needs, and use it usin
 
 Example:
 ```
-nix run github:nix-community/disko -- --mode disko ./disko/pc/disko.nix  --arg disks '["/dev/vda"]' # this assumes you are using the comfort shell from this repository
+nix run github:nix-community/disko -- --mode disko ./disko/pc/f2fs.nix  --arg disks '["/dev/vda"]' # this assumes you are using the comfort shell from this repository
 ```
 
 # Installation steps
@@ -24,7 +24,7 @@ First, you may want to enter the comfort shell.
 
 Format the main disk on which your system will reside:
 ```
-nix run github:nix-community/disko -- --mode disko ./disko/pc/disko.nix  --arg disks '["/dev/vda"]' # this assumes you are using the comfort shell from this repository
+nix run github:nix-community/disko -- --mode disko ./disko/pc/f2fs.nix  --arg disks '["/dev/vda"]' # this assumes you are using the comfort shell from this repository
 ```
 
 Create the persistent directory in `/nix`:
