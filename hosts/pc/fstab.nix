@@ -84,7 +84,6 @@
       fsType = "f2fs";
       options = [
         "defaults"
-        "X-mount.mkdir"
         "compress_algorithm=zstd:9"
         "compress_chksum"
         "atgc"
