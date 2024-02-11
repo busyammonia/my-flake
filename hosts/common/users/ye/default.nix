@@ -35,6 +35,7 @@ in {
       "network"
       "flashrom"
       "disk"
+      "ye"
     ];
 
     initialPassword = "test";
@@ -58,6 +59,8 @@ in {
     useGlobalPkgs = true;
     useUserPackages = true;
   };
+
+  users.groups.ye = {};
 
   systemd.tmpfiles = {
     rules = [
