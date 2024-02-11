@@ -5,7 +5,7 @@ let
   labelEfi = "${builtins.substring 0 7 "${pcName}"}-EFI";
   partlabelCrypt = "${pcName}-crypt";
   labelCrypt = "${pcName}-zfs";
-  labelZfsPool = "zroot-${pcName}";
+  labelZfsPool = "${pcName}-zroot";
 in {
   disko.devices = {
     disk = {
@@ -56,7 +56,7 @@ in {
                 settings = { allowDiscards = true; };
                 content = {
                   type = "zfs";
-                  pool = "zroot";
+                  pool = labelZfsPool;
                 };
               };
             };
