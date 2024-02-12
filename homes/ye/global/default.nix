@@ -42,7 +42,6 @@ rec {
   programs.bash = {
     enable = true;
     sessionVariables = {
-      # GITHUB_TOKEN = "$(cat $XDG_RUNTIME_DIR/github_access_token.txt  )";
       __MYFLAKE__ = "yes";
     };
   };
