@@ -24,6 +24,10 @@
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.inputs.home-manager.follows = "home-manager";
     nix-gaming.url = "github:fufexan/nix-gaming";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
@@ -53,7 +57,7 @@
       nixosConfigurations = {
         pc = lib.nixosSystem {
           modules = [ ./hosts/pc ];
-          specialArgs = { inherit inputs outputs; };
+          specialArgs = { inherit inputs outputs self; };
         };
       };
 

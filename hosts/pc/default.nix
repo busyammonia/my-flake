@@ -1,5 +1,7 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, inputs, ... }: {
   imports = [
+    inputs.sops-nix.nixosModules.sops
+  
     ./hardware-configuration.nix
 
     ../common/global
@@ -32,6 +34,13 @@
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
   security.pam.services.login.enableKwallet = true;
+
+  users.groups.keys = {};
+  systemd.tmpfiles = {
+    rules = [
+      "d /persist/keys 0750 root keys -"
+    ];
+  };
 
   programs.adb.enable = true;
 

@@ -1,7 +1,8 @@
 { inputs, lib, pkgs, config, outputs, ... }:
 
-{
+rec {
   imports = [
+    inputs.sops-nix.homeManagerModules.sops
     inputs.plasma-manager.homeManagerModules.plasma-manager
     inputs.impermanence.nixosModules.home-manager.impermanence
   ] ++ (builtins.attrValues outputs.homeManagerModules);
@@ -20,6 +21,27 @@
         "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
+    };
+  };
+
+  sops = {
+    age.keyFile = "/home/user/.keys/keys.txt"; # must have no password!
+    defaultSopsFile = ../../../secrets/pc/secrets.json;
+    secrets = {
+      "github_access_token" = {
+        # sopsFile = ./secrets.yml.enc; # optionally define per-secret files
+
+        # %r gets replaced with a runtime directory, use %% to specify a '%'
+        # sign. Runtime dir is $XDG_RUNTIME_DIR on linux and $(getconf
+        # DARWIN_USER_TEMP_DIR) on darwin.
+        path = "%r/github_access_token.txt";
+      };
+    };
+  };
+
+  programs.bash = {
+    sessionVariables = {
+      GITHUB_TOKEN = "$(cat ${sops.secrets.github_access_token.path})";
     };
   };
 
@@ -65,6 +87,7 @@
           ".vscode-insiders"
           ".vscodium"
           ".zotero"
+          ".keys"
 
           ".local/share/keyrings"
           ".local/share/direnv"

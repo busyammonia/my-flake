@@ -2,6 +2,7 @@
 let
   ifTheyExist = groups:
     builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
+  homeManagerSessionVars = "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh";
 in {
   imports = [ inputs.home-manager.nixosModules.home-manager ];
   users.mutableUsers = false;
@@ -59,8 +60,10 @@ in {
     useGlobalPkgs = true;
     useUserPackages = true;
   };
+  environment.extraInit = "[[ -f ${homeManagerSessionVars} ]] && source ${homeManagerSessionVars}";
 
   users.groups.ye = {};
+  
 
   systemd.tmpfiles = {
     rules = [
@@ -84,6 +87,7 @@ in {
       "d /zhome/ye/.vscode 0750 ye ye -"
       "d /zhome/ye/.vscode-insiders 0750 ye ye -"
       "d /zhome/ye/.vscodium 0750 ye ye -"
+      "d /zhome/ye/.keys 0750 ye ye -"
 
       "d /zhome/ye/.local/share 0750 ye ye -"
       "d /zhome/ye/.local/share/keyrings 0750 ye ye -"
