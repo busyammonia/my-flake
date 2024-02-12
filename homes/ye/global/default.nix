@@ -39,10 +39,10 @@ rec {
     };
   };
 
-  programs.zsh = {
+  programs.bash = {
     enable = true;
     sessionVariables = {
-      GITHUB_TOKEN = "$(cat ${sops.secrets.github_access_token.path})";
+      GITHUB_TOKEN = "$(cat $XDG_RUNTIME_DIR/github_access_token.txt  )";
       __MYFLAKE__ = "yes";
     };
   };
