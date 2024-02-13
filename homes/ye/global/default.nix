@@ -6,6 +6,8 @@ let
   homePath = "/home/ye";
   coreutils = pkgs.coreutils;
   cat = "${coreutils}/bin/cat";
+  chromiumDesktop = "chromium-browser.desktop";
+  browserDesktop = chromiumDesktop;
 in rec {
   imports = [
     inputs.sops-nix.homeManagerModules.sops
@@ -65,12 +67,25 @@ in rec {
     "${home.sessionVariables.XDG_BIN_HOME}"
   ];
 
+  xdg.mime = { enable = true; };
+
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "text/html" = browserDesktop;
+      "x-scheme-handler/http" = browserDesktop;
+      "x-scheme-handler/https" = browserDesktop;
+      "x-scheme-handler/about" = browserDesktop;
+      "x-scheme-handler/unknown" = browserDesktop;
+    };
+  };
+
   programs.bash = {
     enable = true;
     initExtra = ''
       export GITHUB_TOKEN=$(${cat} ${sops.secrets.github_access_token.path})
       export GITHUB_API_TOKEN=$(${cat} ${sops.secrets.github_access_token.path})
-    '';    
+    '';
   };
 
   programs = {
