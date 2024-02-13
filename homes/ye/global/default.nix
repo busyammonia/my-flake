@@ -42,16 +42,28 @@ in rec {
       "github_signing_key" = {
         path = "${secretsUserPath}/github_signing_key.asc";
       };
-      "github_ssh_key" = {
-        path = "${secretsUserPath}/github.key";
-      };
+      "github_ssh_key" = { path = "${secretsUserPath}/github.key"; };
     };
   };
 
   home.sessionVariables = {
     __MYFLAKE1__ = "yes";
     __MYFLAKE__ = "yes";
+    TZ = "MSK-3";
+    EDITOR = "${pkgs.vscode}/bin/code -w"; #
+    XDG_CACHE_HOME = "$HOME/.cache";
+    XDG_CONFIG_HOME = "$HOME/.config";
+    XDG_DATA_HOME = "$HOME/.local/share";
+    XDG_STATE_HOME = "$HOME/.local/state";
+    XDG_BIN_HOME = "$HOME/.local/bin";
   };
+
+  home.sessionPath = [
+    "/usr/local/bin"
+    "/usr/local/zfs/bin"
+    "${homePath}/bin"
+    "${home.sessionVariables.XDG_BIN_HOME}"
+  ];
 
   programs.bash = {
     enable = true;
@@ -78,14 +90,20 @@ in rec {
 
   systemd.user.services.add_ssh_keys = {
     Unit.Description = "Add ye SSH keys";
-    Unit.After = [ "plasma-kwallet-pam.service" "sops-nix.service" "plasma-kwin_x11.service" "plasma-kwin_wayland.service" "plasma-polkit-agent.service"];
+    Unit.After = [
+      "plasma-kwallet-pam.service"
+      "sops-nix.service"
+      "plasma-kwin_x11.service"
+      "plasma-kwin_wayland.service"
+      "plasma-polkit-agent.service"
+    ];
     Install.WantedBy = [ "graphical-session.target" ];
     Service = {
       ExecStart = "${pkgs.writeShellScript "add_ssh_keys" ''
-      export SSH_ASKPASS="${pkgs.ksshaskpass}/bin/ksshaskpass"
-      export SSH_ASKPASS_REQUIRE="prefer"
-      ${pkgs.openssh}/bin/ssh-add ${secretsUserPath}/github.key
-    ''}";
+        export SSH_ASKPASS="${pkgs.ksshaskpass}/bin/ksshaskpass"
+        export SSH_ASKPASS_REQUIRE="prefer"
+        ${pkgs.openssh}/bin/ssh-add ${secretsUserPath}/github.key
+      ''}";
     };
   };
 
