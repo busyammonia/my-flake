@@ -42,6 +42,9 @@ in rec {
       "github_signing_key" = {
         path = "${secretsUserPath}/github_signing_key.asc";
       };
+      "github_ssh_key" = {
+        path = "${secretsUserPath}/github.key";
+      };
     };
   };
 
