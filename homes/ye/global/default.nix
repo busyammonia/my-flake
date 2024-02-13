@@ -1,6 +1,6 @@
 { inputs, lib, pkgs, config, outputs, ... }:
 
-rec {
+let secretsPath = "/run/user/1000"; in rec {
   imports = [
     inputs.sops-nix.homeManagerModules.sops
     inputs.plasma-manager.homeManagerModules.plasma-manager
@@ -43,7 +43,7 @@ rec {
     enable = true;
     sessionVariables = {
       __MYFLAKE1__ = "yes";
-      GITHUB_TOKEN = "$(cat ${sops.secrets.github_access_token.path})";
+      GITHUB_TOKEN = "$(cat ${secretsPath}/github_access_token.txt)";
       __MYFLAKE__ = "yes";
     };
   };
