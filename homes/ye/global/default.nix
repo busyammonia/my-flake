@@ -3,7 +3,8 @@
 let
   userUid = "1000";
   secretsUserPath = "/run/user/${userUid}";
-  cat = "${pkgs.coreutils}/bin/cat";
+  coreutils = pkgs.coreutils;
+  cat = "${coreutils}/bin/cat";
 in rec {
   imports = [
     inputs.sops-nix.homeManagerModules.sops
@@ -47,8 +48,14 @@ in rec {
 
   home.sessionVariables = {
     __MYFLAKE1__ = "yes";
-    GITHUB_TOKEN = "$(${cat} ${sops.secrets.github_access_token.path})";
     __MYFLAKE__ = "yes";
+  };
+
+  programs.bash = {
+    enable = true;
+    initExtra = ''
+      export GITHUB_TOKEN=$(${cat} ${sops.secrets.github_access_token.path})
+    '';
   };
 
   programs = {
