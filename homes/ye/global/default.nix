@@ -50,7 +50,7 @@ in rec {
     __MYFLAKE1__ = "yes";
     __MYFLAKE__ = "yes";
     TZ = "MSK-3";
-    EDITOR = "${pkgs.vscode}/bin/code -w"; #
+    EDITOR = "${pkgs.vscode}/bin/code -w";
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_DATA_HOME = "$HOME/.local/share";
