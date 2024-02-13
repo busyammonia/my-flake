@@ -82,7 +82,6 @@ in rec {
     Install.WantedBy = [ "graphical-session.target" ];
     Service = {
       ExecStart = "${pkgs.writeShellScript "add_ssh_keys" ''
-      eval `${pkgs.openssh}/bin/ssh-agent -s`
       export SSH_ASKPASS="${pkgs.ksshaskpass}/bin/ksshaskpass"
       export SSH_ASKPASS_REQUIRE="prefer"
       ${pkgs.openssh}/bin/ssh-add ${secretsUserPath}/github.key
