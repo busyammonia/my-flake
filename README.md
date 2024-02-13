@@ -42,4 +42,5 @@ nixos-install --flake .#pc
 
 ```
 EDITOR="code -w" SOPS_AGE_RECIPIENTS=$(< ~/Git/age/pc.agepub) SOPS_AGE_KEY_FILE=~/Git/age/ye.agekey sops secrets/pc/secrets.json
+EDITOR="code -w" SOPS_AGE_RECIPIENTS="age1vn70yw2796zrgmlfnjjee6zldxvrsa2jytx4u9phmtdxf5zmjy2s54maed,age1gvxnr97tvkjumsmgdpyw5s22n0fvj7k44slv3nl6rs87yx9xaf4qxxw40s" SOPS_AGE_KEY_FILE=~/Git/age/ye.agekey sops secrets/pc/secrets.json
 ```
