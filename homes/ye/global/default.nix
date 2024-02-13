@@ -78,8 +78,8 @@ in rec {
 
   systemd.user.services.add_ssh_keys = {
     Unit.Description = "Neuron zettelkasten service";
+    Unit.After = [ "plasma-kwallet-pam.service" ];
     Install.WantedBy = [ "graphical-session.target" ];
-    Install.After = [ "plasma-kwallet-pam.service" ];
     Service = {
       ExecStart = "${pkgs.writeShellScript "add_ssh_keys" ''
       eval `${pkgs.openssh}/bin/ssh-agent -s`
