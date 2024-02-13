@@ -42,6 +42,7 @@ rec {
   programs.bash = {
     enable = true;
     sessionVariables = {
+      GITHUB_TOKEN = "$(cat ${sops.secrets.github_access_token.path})";
       __MYFLAKE__ = "yes";
     };
   };
