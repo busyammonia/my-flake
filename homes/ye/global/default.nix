@@ -1,6 +1,6 @@
 { inputs, lib, pkgs, config, outputs, ... }:
 
-let secretsPath = "/run/user/1000"; in rec {
+let userUid = "1000"; secretsUserPath = "/run/user/${userUid}"; in rec {
   imports = [
     inputs.sops-nix.homeManagerModules.sops
     inputs.plasma-manager.homeManagerModules.plasma-manager
@@ -27,6 +27,8 @@ let secretsPath = "/run/user/1000"; in rec {
   sops = {
     age.keyFile = "/home/ye/.keys/keys.txt"; # must have no password!
     defaultSopsFile = ../../../secrets/pc/secrets.json;
+    defaultSymlinkPath = "${secretsUserPath}/secrets";
+    defaultSecretsMountPoint = "${secretsUserPath}/secrets.d";
     secrets = {
       "github_access_token" = {
         # sopsFile = ./secrets.yml.enc; # optionally define per-secret files
@@ -34,7 +36,7 @@ let secretsPath = "/run/user/1000"; in rec {
         # %r gets replaced with a runtime directory, use %% to specify a '%'
         # sign. Runtime dir is $XDG_RUNTIME_DIR on linux and $(getconf
         # DARWIN_USER_TEMP_DIR) on darwin.
-        path = "%r/github_access_token.txt";
+        path = "${secretsUserPath}/github_access_token.txt";
       };
     };
   };
@@ -43,7 +45,7 @@ let secretsPath = "/run/user/1000"; in rec {
     enable = true;
     sessionVariables = {
       __MYFLAKE1__ = "yes";
-      GITHUB_TOKEN = "$(cat ${secretsPath}/github_access_token.txt)";
+      GITHUB_TOKEN = "$(cat ${secretsUserPath}/github_access_token.txt)";
       __MYFLAKE__ = "yes";
     };
   };
