@@ -45,7 +45,7 @@ let userUid = "1000"; secretsUserPath = "/run/user/${userUid}"; in rec {
     enable = true;
     sessionVariables = {
       __MYFLAKE1__ = "yes";
-      GITHUB_TOKEN = "$(cat ${secretsUserPath}/github_access_token.txt)";
+      GITHUB_TOKEN = "$(cat ${sops.secrets.github_access_token.path})";
       __MYFLAKE__ = "yes";
     };
   };
