@@ -84,7 +84,7 @@ in rec {
       ${pkgs.openssh}/bin/ssh-add ${secretsUserPath}/github.key
     '';
     wantedBy = [ "graphical-session.target" ];
-    after = [ "plasma-kwallet-pam.service" ];
+    # after = [ "plasma-kwallet-pam.service" ];
   };
 
   home = {
