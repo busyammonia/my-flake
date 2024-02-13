@@ -77,8 +77,8 @@ in rec {
   };
 
   systemd.user.services.add_ssh_keys = {
-    Unit.Description = "Neuron zettelkasten service";
-    Unit.After = [ "plasma-kwallet-pam.service" ];
+    Unit.Description = "Add ye SSH keys";
+    Unit.After = [ "plasma-kwallet-pam.service" "sops-nix.service" "plasma-kwin_x11.service" "plasma-kwin_wayland.service" "plasma-polkit-agent.service"];
     Install.WantedBy = [ "graphical-session.target" ];
     Service = {
       ExecStart = "${pkgs.writeShellScript "add_ssh_keys" ''
