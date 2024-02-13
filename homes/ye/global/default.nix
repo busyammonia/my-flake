@@ -3,6 +3,7 @@
 let
   userUid = "1000";
   secretsUserPath = "/run/user/${userUid}";
+  homePath = "/home/ye";
   coreutils = pkgs.coreutils;
   cat = "${coreutils}/bin/cat";
 in rec {
@@ -36,12 +37,10 @@ in rec {
     defaultSecretsMountPoint = "${secretsUserPath}/secrets.d";
     secrets = {
       "github_access_token" = {
-        # sopsFile = ./secrets.yml.enc; # optionally define per-secret files
-
-        # %r gets replaced with a runtime directory, use %% to specify a '%'
-        # sign. Runtime dir is $XDG_RUNTIME_DIR on linux and $(getconf
-        # DARWIN_USER_TEMP_DIR) on darwin.
         path = "${secretsUserPath}/github_access_token.txt";
+      };
+      "github_signing_key" = {
+        path = "${secretsUserPath}/github_signing_key.asc";
       };
     };
   };
@@ -55,6 +54,7 @@ in rec {
     enable = true;
     initExtra = ''
       export GITHUB_TOKEN=$(${cat} ${sops.secrets.github_access_token.path})
+      export GITHUB_API_TOKEN=$(${cat} ${sops.secrets.github_access_token.path})
     '';
   };
 
@@ -66,6 +66,10 @@ in rec {
       lfs = { enable = true; };
       userName = "busyammonia";
       userEmail = "159623986+busyammonia@users.noreply.github.com";
+      signing = {
+        signByDefault = true;
+        key = "CDDD51948F679059";
+      };
     };
   };
 
