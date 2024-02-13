@@ -42,9 +42,7 @@ in rec {
       "github_signing_key" = {
         path = "${secretsUserPath}/github_signing_key.asc";
       };
-      "github_ssh_key" = {
-        path = "${secretsUserPath}/github.key";
-      };
+      "github_ssh_key" = { path = "${secretsUserPath}/github.key"; };
     };
   };
 
@@ -74,6 +72,17 @@ in rec {
         key = "CDDD51948F679059";
       };
     };
+  };
+
+  systemd.user.services.add_ssh_keys = {
+    script = ''
+      eval `${pkgs.openssh}/bin/ssh-agent -s`
+      export SSH_ASKPASS="${pkgs.ksshaskpass}/bin/ksshaskpass"
+      export SSH_ASKPASS_REQUIRE="prefer"
+      ${pkgs.openssh}/bin/ssh-add ${secretsUserPath}/github.key
+    '';
+    wantedBy = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
   };
 
   home = {
