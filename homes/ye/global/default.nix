@@ -79,7 +79,7 @@ in rec {
   home = {
     username = lib.mkDefault "ye";
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
-    stateVersion = lib.mkDefault "23.11";
+    stateVersion = lib.mkDefault "24.05";
 
     persistence = {
       "/zhome/${config.home.username}" = {
