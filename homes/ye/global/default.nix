@@ -130,6 +130,7 @@ in rec {
           "Vault"
           "Torrents"
           "Zotero"
+          "bin"
           ".gnupg"
           ".ssh"
           ".nixops"
