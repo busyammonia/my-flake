@@ -42,7 +42,9 @@ in rec {
       "github_signing_key" = {
         path = "${secretsUserPath}/github_signing_key.asc";
       };
-      "github_ssh_key" = { path = "${secretsUserPath}/github.key"; };
+      "github_ssh_key" = {
+        path = "${secretsUserPath}/github.key";
+      };
     };
   };
 
@@ -82,7 +84,7 @@ in rec {
       ${pkgs.openssh}/bin/ssh-add ${secretsUserPath}/github.key
     '';
     wantedBy = [ "graphical-session.target" ];
-    after = [ "graphical-session.target" ];
+    after = [ "plasma-kwallet-pam.service" ];
   };
 
   home = {
