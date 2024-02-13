@@ -25,7 +25,7 @@ rec {
   };
 
   sops = {
-    age.keyFile = "/home/user/.keys/keys.txt"; # must have no password!
+    age.keyFile = "/home/ye/.keys/keys.txt"; # must have no password!
     defaultSopsFile = ../../../secrets/pc/secrets.json;
     secrets = {
       "github_access_token" = {
