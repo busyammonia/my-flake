@@ -56,8 +56,6 @@ in rec {
     XDG_DATA_HOME = "$HOME/.local/share";
     XDG_STATE_HOME = "$HOME/.local/state";
     XDG_BIN_HOME = "$HOME/.local/bin";
-    GITHUB_TOKEN="$(${cat} ${sops.secrets.github_access_token.path})";
-    GITHUB_API_TOKEN="$(${cat} ${sops.secrets.github_access_token.path})";
   };
 
   home.sessionPath = [
@@ -69,6 +67,10 @@ in rec {
 
   programs.bash = {
     enable = true;
+    initExtra = ''
+      export GITHUB_TOKEN=$(${cat} ${sops.secrets.github_access_token.path})
+      export GITHUB_API_TOKEN=$(${cat} ${sops.secrets.github_access_token.path})
+    '';    
   };
 
   programs = {
