@@ -118,7 +118,7 @@
     bindPort = 53;
     settings = {
       force-AAAA-SOA = true;
-      speed-check-mode = "ping,tcp:443,tcp:80";
+      speed-check-mode = "tcp:443,tcp:80,ping";
       response-mode = "fastest-ip";
       cache-size = 32768;
       cache-persist = true;
