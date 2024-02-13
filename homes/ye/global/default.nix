@@ -7,7 +7,7 @@ let
   coreutils = pkgs.coreutils;
   cat = "${coreutils}/bin/cat";
   chromiumDesktop = "chromium-browser.desktop";
-  browserDesktop = chromiumDesktop;
+  browser = chromiumDesktop;
 in rec {
   imports = [
     inputs.sops-nix.homeManagerModules.sops
@@ -72,11 +72,34 @@ in rec {
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
-      "text/html" = browserDesktop;
-      "x-scheme-handler/http" = browserDesktop;
-      "x-scheme-handler/https" = browserDesktop;
-      "x-scheme-handler/about" = browserDesktop;
-      "x-scheme-handler/unknown" = browserDesktop;
+      "text/html" = browser;
+      "application/x-extension-htm" = browser;
+      "application/x-extension-html" = browser;
+      "application/xhtml+xml" = browser;
+      "application/x-extension-xht" = browser;
+      "application/x-extension-xhtml" = browser;
+      "application/x-extension-shtml" = browser;
+      "x-scheme-handler/http" = browser;
+      "x-scheme-handler/https" = browser;
+      "x-scheme-handler/about" = browser;
+      "x-scheme-handler/unknown" = browser;
+      "x-scheme-handler/chrome" = browser;
+    };
+    associations = {
+      added = {
+        "text/html" = browser;
+        "application/x-extension-htm" = browser;
+        "application/x-extension-html" = browser;
+        "application/xhtml+xml" = browser;
+        "application/x-extension-xht" = browser;
+        "application/x-extension-xhtml" = browser;
+        "application/x-extension-shtml" = browser;
+        "x-scheme-handler/http" = browser;
+        "x-scheme-handler/https" = browser;
+        "x-scheme-handler/about" = browser;
+        "x-scheme-handler/unknown" = browser;
+        "x-scheme-handler/chrome" = browser;
+      };
     };
   };
 
