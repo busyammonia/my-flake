@@ -79,14 +79,14 @@ in rec {
   systemd.user.services.add_ssh_keys = {
     Unit.Description = "Neuron zettelkasten service";
     Install.WantedBy = [ "graphical-session.target" ];
-    Install.after = [ "plasma-kwallet-pam.service" ];
+    Install.After = [ "plasma-kwallet-pam.service" ];
     Service = {
-      ExecStart = ''
+      ExecStart = "${pkgs.writeShellScript "add_ssh_keys" ''
       eval `${pkgs.openssh}/bin/ssh-agent -s`
       export SSH_ASKPASS="${pkgs.ksshaskpass}/bin/ksshaskpass"
       export SSH_ASKPASS_REQUIRE="prefer"
       ${pkgs.openssh}/bin/ssh-add ${secretsUserPath}/github.key
-    '';
+    ''}";
     };
   };
 
