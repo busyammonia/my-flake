@@ -247,7 +247,7 @@ in {
           listsnapshots = "on";
         };
 
-        mountpoint = "/";
+        mountpoint = "/zdata";
 
         datasets = {
           reservation = {
