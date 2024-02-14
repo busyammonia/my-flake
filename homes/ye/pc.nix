@@ -33,6 +33,17 @@
         "Use" = true;
         "VariantList" = ",";
       };
+      "powermanagementprofilesrc" = { # Disable all powersaving features
+        "AC" = {
+          "icon" = "battery-charging"
+        };
+        "Battery" = {
+          "icon" = "battery-060";
+        };
+        "LowBattery" = {
+          "icon" = "battery-low"
+        };
+      };
     };
   };
 }
