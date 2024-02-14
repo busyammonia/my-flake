@@ -295,7 +295,7 @@ in {
             };
           };
 
-          torrent = {
+          torrents = {
             type = "zfs_fs";
             mountpoint = "/Torrents";
             options = {

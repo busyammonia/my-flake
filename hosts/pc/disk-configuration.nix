@@ -127,38 +127,38 @@
       neededForBoot = true;
     };
 
-    "/mnt/Downloads" = {
+    "/zdata/Downloads" = {
       device = "${pcName}-zdata/downloads";
       fsType = "zfs";
       neededForBoot = true;
     };
 
-    "/mnt/Other" = {
+    "/zdata/Other" = {
       device = "${pcName}-zdata/other";
       fsType = "zfs";
       neededForBoot = true;
     };
 
-    "/mnt/Share" = {
+    "/zdata/Share" = {
       device = "${pcName}-zdata/share";
       fsType = "zfs";
       neededForBoot = true;
     };
 
-    "/mnt/Torrents" = {
+    "/zdata/Torrents" = {
       device = "${pcName}-zdata/torrents";
       fsType = "zfs";
       neededForBoot = true;
     };
 
-    "/mnt/Trash" = {
-      device = "${pcName}-zdata/downloads";
+    "/zdata/Trash" = {
+      device = "${pcName}-zdata/trash";
       fsType = "zfs";
       options = [ "nodiratime" "noatime" "norelatime" "noxattr" ];
       neededForBoot = true;
     };
 
-    "/mnt/VM" = {
+    "/zdata/VM" = {
       device = "${pcName}-zdata/vm";
       fsType = "zfs";
       neededForBoot = true;
