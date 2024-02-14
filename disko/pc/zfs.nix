@@ -194,6 +194,7 @@ in {
             mountOptions = [ "noatime" "nodiratime" ];
             mountpoint = "/nix";
             options = {
+              sync = "disabled";
               acltype = "off";
               compression = "zstd-9";
               relatime = "off";
@@ -225,6 +226,7 @@ in {
         type = "zpool";
 
         rootFsOptions = {
+          sync = "disabled";
           acltype = "posixacl";
           atime = "off";
           compression = "zstd-9";
