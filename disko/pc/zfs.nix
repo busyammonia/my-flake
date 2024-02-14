@@ -174,7 +174,7 @@ in {
           listsnapshots = "on";
         };
 
-        mountpoint = "/zdata";
+        mountpoint = "/";
 
         datasets = {
           reservation = {
@@ -247,7 +247,7 @@ in {
           listsnapshots = "on";
         };
 
-        mountpoint = "/zdata";
+        mountpoint = "/mnt";
 
         datasets = {
           reservation = {
