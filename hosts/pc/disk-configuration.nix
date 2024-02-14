@@ -37,6 +37,10 @@
         device = "/dev/disk/by-partlabel/disk-${pcName}-main-crypt";
         allowDiscards = true;
       };
+      luks.devices."pc-hdd-zfs" = {
+        device = "/dev/disk/by-partlabel/disk-${pcName}-hdd-crypt";
+        allowDiscards = true;
+      };
     };
     supportedFilesystems = [ "zfs" ];
     loader = {
@@ -120,6 +124,43 @@
       device = "${pcName}-zroot/zhome";
       fsType = "zfs";
       options = [ "relatime" "xattr" "posixacl" ];
+      neededForBoot = true;
+    };
+
+    "/zdata/Downloads" = {
+      device = "${pcName}-zdata/downloads";
+      fsType = "zfs";
+      neededForBoot = true;
+    };
+
+    "/zdata/Other" = {
+      device = "${pcName}-zdata/other";
+      fsType = "zfs";
+      neededForBoot = true;
+    };
+
+    "/zdata/Share" = {
+      device = "${pcName}-zdata/share";
+      fsType = "zfs";
+      neededForBoot = true;
+    };
+
+    "/zdata/Torrents" = {
+      device = "${pcName}-zdata/torrents";
+      fsType = "zfs";
+      neededForBoot = true;
+    };
+
+    "/zdata/Trash" = {
+      device = "${pcName}-zdata/downloads";
+      fsType = "zfs";
+      options = [ "nodiratime" "noatime" "norelatime" "noxattr" ];
+      neededForBoot = true;
+    };
+
+    "/zdata/VM" = {
+      device = "${pcName}-zdata/vm";
+      fsType = "zfs";
       neededForBoot = true;
     };
   };
