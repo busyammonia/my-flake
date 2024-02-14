@@ -65,7 +65,7 @@ in {
                 type = "filesystem";
                 format = "vfat";
                 extraArgs = ["-n ${main.labelEfi}"];
-                mountpoint = null;
+                mountpoint = "/boot";
               };
             };
             root = {
@@ -122,7 +122,7 @@ in {
                 type = "filesystem";
                 format = "vfat";
                 extraArgs = ["-n ${hdd.labelEfi}"];
-                mountpoint = "/boot";
+                mountpoint = "/boot_hdd";
               };
             };
             root = {
