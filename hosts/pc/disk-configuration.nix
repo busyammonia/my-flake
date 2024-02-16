@@ -127,7 +127,7 @@
       neededForBoot = true;
     };
 
-    "/mnt/hdd/" = {
+    "/mnt/hdd" = {
       device = "${hostname}-zdata/default";
       fsType = "zfs";
       neededForBoot = true;
