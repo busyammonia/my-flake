@@ -57,22 +57,20 @@
       formatter = forEachSystem (pkgs: pkgs.nixpkgs-fmt);
 
       nixosConfigurations = {
-        pc = lib.nixosSystem {
-          modules = [ ./hosts/pc ];
-          specialArgs = rec {
+        pc = let
+          _specialArgs = rec {
             inherit inputs outputs self;
-            secrets =
-              builtins.fromJSON (builtins.readFile "${self}/secrets/pc/evalsecrets.json");
-            hostname = secrets.hostname;
+            secrets = builtins.fromJSON
+              (builtins.readFile "${self}/secrets/pc/evalsecrets.json");
+            hostname = secrets."hostname";
+            username = secrets."username";
+            homeDirectory = secrets."home_directory";
           };
-        };
-      };
-
-      homeConfigurations = {
-        "ye@pc" = lib.homeManagerConfiguration {
-          modules = [ ./home/ye/pc.nix ];
-          pkgs = pkgsFor.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
+        in lib.nixosSystem {
+          modules = [ ./hosts/pc ];
+          specialArgs = _specialArgs // {
+            specialArgsPassthrough = _specialArgs;
+          };
         };
       };
     };

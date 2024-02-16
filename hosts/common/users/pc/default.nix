@@ -1,23 +1,22 @@
-{ pkgs, inputs, config, secrets, ... }:
+{ pkgs, inputs, config, secrets, specialArgsPassthrough, username, ... }:
 let
   ifTheyExist = groups:
     builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
   homeManagerConfigUserName = "pc";
-  userName = "ye";
-  homeDirectory = "/home/${userName}";
+  homeDirectory = "/home/${username}";
   precreateUserDirectoryRules = (persistPath: perm: user: group: dirs:
     builtins.map
     (dir: "d ${persistPath}/${user}/${dir} ${perm} ${user} ${group} -") dirs);
   precreateUserDirectoryRulesPerm =
     precreateUserDirectoryRules "zhome" "0750";
   precreateUserDirectoryRulesDefault =
-    precreateUserDirectoryRulesPerm userName userName;
+    precreateUserDirectoryRulesPerm username username;
   homeManagerSessionVars =
     "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh";
 in {
   imports = [ inputs.home-manager.nixosModules.home-manager ];
   users.mutableUsers = false;
-  users.users."${userName}" = {
+  users.users."${username}" = {
     isNormalUser = true;
 
     extraGroups = [ "wheel" "video" "audio" ] ++ ifTheyExist [
@@ -47,7 +46,7 @@ in {
       "network"
       "flashrom"
       "disk"
-      "${userName}"
+      "${username}"
     ];
 
     initialPassword = "test";
@@ -66,51 +65,20 @@ in {
 
   home-manager = {
     users = {
-      "${userName}" = import
+      "${username}" = import
         ../../../../homes/${homeManagerConfigUserName}/${config.networking.hostName}.nix;
     };
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = rec { inherit secrets; };
+    extraSpecialArgs = specialArgsPassthrough;
   };
   environment.extraInit =
     "[[ -f ${homeManagerSessionVars} ]] && source ${homeManagerSessionVars}";
 
-  users.groups."${userName}" = { };
+  users.groups."${username}" = { };
 
   systemd.tmpfiles = let
-    dirs = [
-      ""
-      "Downloads"
-      "Music"
-      "Pictures"
-      "Documents"
-      "Videos"
-      ''"VirtualBox VMs"''
-      "VM"
-      "Templates"
-      "Public"
-      "Desktop"
-      "NixConfig"
-      "bin"
-      ".local"
-      ".config"
-      ".gnupg"
-      ".ssh"
-      ".nixops"
-      ".vscode"
-      ".vscode-insiders"
-      ".vscodium"
-      ".keys"
-      ".local/share"
-      ".local/share/keyrings"
-      ".local/share/direnv"
-      ".local/bin"
-      ".config"
-      ".config/Code"
-      ''.config/"Code - Insiders"''
-      "./config/VSCodium"
-    ];
+    dirs = secrets."home_persist_directories";
   in {
     rules = precreateUserDirectoryRulesDefault dirs;
   };

@@ -1,4 +1,4 @@
-{ inputs, outputs, config, pkgs, secrets, ... }: let pcName = secrets."hostname"; in {
+{ inputs, outputs, config, pkgs, secrets, hostname, ... }: {
   imports = [ inputs.impermanence.nixosModules.impermanence ];
   programs.fuse.userAllowOther = true;
 
@@ -34,11 +34,11 @@
   boot = {
     initrd = {
       luks.devices."pc-zfs" = {
-        device = "/dev/disk/by-partlabel/disk-${pcName}-main-crypt";
+        device = "/dev/disk/by-partlabel/disk-${hostname}-main-crypt";
         allowDiscards = true;
       };
       luks.devices."pc-hdd-zfs" = {
-        device = "/dev/disk/by-partlabel/disk-${pcName}-hdd-crypt";
+        device = "/dev/disk/by-partlabel/disk-${hostname}-hdd-crypt";
         allowDiscards = true;
       };
     };
@@ -101,65 +101,65 @@
     };
 
     "/boot" = {
-      device = "/dev/disk/by-partlabel/disk-${pcName}-main-ESP";
+      device = "/dev/disk/by-partlabel/disk-${hostname}-main-ESP";
       fsType = "vfat";
       neededForBoot = true;
     };
 
     "/nix" = {
-      device = "${pcName}-zroot/nix";
+      device = "${hostname}-zroot/nix";
       fsType = "zfs";
       options = [ "nodiratime" "noatime" "norelatime" "noxattr" ];
       neededForBoot = true;
     };
 
     "/persist" = {
-      device = "${pcName}-zroot/persist";
+      device = "${hostname}-zroot/persist";
       fsType = "zfs";
       options = [ "relatime" "nodiratime" "noatime" "xattr" "posixacl" ];
       neededForBoot = true;
     };
 
     "/zhome" = {
-      device = "${pcName}-zroot/zhome";
+      device = "${hostname}-zroot/zhome";
       fsType = "zfs";
       options = [ "relatime" "xattr" "posixacl" ];
       neededForBoot = true;
     };
 
     "/zdata/Downloads" = {
-      device = "${pcName}-zdata/downloads";
+      device = "${hostname}-zdata/downloads";
       fsType = "zfs";
       neededForBoot = true;
     };
 
     "/zdata/Other" = {
-      device = "${pcName}-zdata/other";
+      device = "${hostname}-zdata/other";
       fsType = "zfs";
       neededForBoot = true;
     };
 
     "/zdata/Share" = {
-      device = "${pcName}-zdata/share";
+      device = "${hostname}-zdata/share";
       fsType = "zfs";
       neededForBoot = true;
     };
 
     "/zdata/Torrents" = {
-      device = "${pcName}-zdata/torrents";
+      device = "${hostname}-zdata/torrents";
       fsType = "zfs";
       neededForBoot = true;
     };
 
     "/zdata/Trash" = {
-      device = "${pcName}-zdata/trash";
+      device = "${hostname}-zdata/trash";
       fsType = "zfs";
       options = [ "nodiratime" "noatime" "norelatime" "noxattr" ];
       neededForBoot = true;
     };
 
     "/zdata/VM" = {
-      device = "${pcName}-zdata/vm";
+      device = "${hostname}-zdata/vm";
       fsType = "zfs";
       neededForBoot = true;
     };

@@ -1,10 +1,10 @@
-{ inputs, lib, pkgs, config, outputs, secrets, ... }:
+{ inputs, lib, pkgs, config, outputs, secrets, username, hostname, ... }:
 
 let
   userUid = "1000";
   secretsUserPath = "/run/user/${userUid}";
-  userName = "ye";
-  homePath = "/home/${userName}";
+  username = secrets."username";
+  homePath = "/home/${username}";
   coreutils = pkgs.coreutils;
   cat = "${coreutils}/bin/cat";
   chromiumDesktop = "chromium-browser.desktop";
@@ -22,7 +22,7 @@ in rec {
     package = lib.mkDefault pkgs.nix;
     settings = {
       experimental-features = [ "nix-command" "flakes" "repl-flake" ];
-      trusted-users = [ "root" "@admin" "@wheel" "${userName}" ];
+      trusted-users = [ "root" "@admin" "@wheel" "${username}" ];
       extra-substituters =
         [ "https://nyx.chaotic.cx/" "https://nix-community.cachix.org" ];
       extra-trusted-public-keys = [
@@ -118,17 +118,17 @@ in rec {
       enable = true;
       package = pkgs.gitFull;
       lfs = { enable = true; };
-      userName = "busyammonia";
-      userEmail = "159623986+busyammonia@users.noreply.github.com";
+      userName = secrets."github_name";
+      userEmail = secrets."github_email";
       signing = {
         signByDefault = true;
-        key = "CDDD51948F679059";
+        key = secrets."github_signing_key";
       };
     };
   };
 
   systemd.user.services.add_ssh_keys = {
-    Unit.Description = "Add ${userName} SSH keys";
+    Unit.Description = "Add ${username} SSH keys";
     Unit.After = [
       "plasma-kwallet-pam.service"
       "sops-nix.service"
@@ -147,64 +147,13 @@ in rec {
   };
 
   home = {
-    username = lib.mkDefault userName;
+    username = lib.mkDefault username;
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
     stateVersion = lib.mkDefault "24.05";
 
     persistence = {
       "/zhome/${config.home.username}" = {
-        directories = [
-          "Downloads"
-          "Music"
-          "Pictures"
-          "Documents"
-          "Videos"
-          "VirtualBox VMs"
-          "VM"
-          "Templates"
-          "Public"
-          "Desktop"
-          "NixConfig"
-          "Git"
-          "Vault"
-          "Torrents"
-          "Zotero"
-          "bin"
-          ".gnupg"
-          ".ssh"
-          ".nixops"
-          ".mozilla"
-          ".vscode"
-          ".vscode-insiders"
-          ".vscodium"
-          ".zotero"
-          ".keys"
-
-          ".local/share/keyrings"
-          ".local/share/direnv"
-          ".local/share/tor-browser"
-          ".local/share/qBittorrent"
-          ".local/share/Anki2"
-          ".local/share/Anki"
-          ".local/share/tg"
-          ".local/share/kscreen"
-          ".local/share/bottles"
-          ".local/share/TelegramDesktop"
-          ".local/bin"
-          ".local/share/kwalletd"
-
-          ".config/kwalletrc"
-          ".config/chromium"
-          ".config/Code"
-          ''.config/"Code - Insiders"''
-          ".config/VSCodium"
-          ".config/Bitwarden"
-          ".config/Bitwarden CLI"
-          ".config/qBittorrent"
-          ".config/tg"
-          ".config/obsidian"
-          ".config/nekoray"
-        ];
+        directories = secrets."home_persist_directories";
         allowOther = true;
       };
     };
