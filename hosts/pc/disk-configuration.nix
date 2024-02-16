@@ -1,4 +1,4 @@
-{ inputs, outputs, config, pkgs, ... }: let pcName = "pc"; in {
+{ inputs, outputs, config, pkgs, secrets, ... }: let pcName = secrets."hostname"; in {
   imports = [ inputs.impermanence.nixosModules.impermanence ];
   programs.fuse.userAllowOther = true;
 
