@@ -1,4 +1,4 @@
-{ pkgs, inputs, config, ... }:
+{ pkgs, inputs, config, secrets, ... }:
 let
   ifTheyExist = groups:
     builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
@@ -59,6 +59,9 @@ in {
     };
     useGlobalPkgs = true;
     useUserPackages = true;
+    extraSpecialArgs = rec {
+      inherit secrets;
+    };
   };
   environment.extraInit = "[[ -f ${homeManagerSessionVars} ]] && source ${homeManagerSessionVars}";
 
