@@ -2,7 +2,8 @@
   description = "NixOS";
 
   nixConfig = {
-    extra-substituters = [ "https://nyx.chaotic.cx/" "https://nix-gaming.cachix.org" ];
+    extra-substituters =
+      [ "https://nyx.chaotic.cx/" "https://nix-gaming.cachix.org" ];
     extra-trusted-public-keys = [
       "nyx.chaotic.cx-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
       "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
@@ -30,7 +31,8 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = inputs:
+    with inputs;
     let
       inherit (self) outputs;
       lib = nixpkgs.lib // home-manager.lib;
@@ -57,7 +59,12 @@
       nixosConfigurations = {
         pc = lib.nixosSystem {
           modules = [ ./hosts/pc ];
-          specialArgs = { inherit inputs outputs self; };
+          specialArgs = rec {
+            inherit inputs outputs self;
+            secrets =
+              builtins.fromJSON (builtins.readFile "${self}/secrets/pc/evalsecrets.json");
+            hostname = secrets.hostname;
+          };
         };
       };
 
