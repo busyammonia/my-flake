@@ -1,11 +1,11 @@
-{ lib, pkgs, inputs, secrets, ... }: {
+{ lib, pkgs, inputs, secrets, ... }: let homeManagerConfigUserName = "pc"; in {
   imports = [
     inputs.sops-nix.nixosModules.sops
   
     ./hardware-configuration.nix
 
     ../common/global
-    ../common/users/ye
+    ../common/users/${homeManagerConfigUserName}
 
     ../common/tweak/common
     ../common/tweak/desktop

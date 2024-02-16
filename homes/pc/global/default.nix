@@ -3,7 +3,8 @@
 let
   userUid = "1000";
   secretsUserPath = "/run/user/${userUid}";
-  homePath = "/home/ye";
+  userName = "ye";
+  homePath = "/home/${userName}";
   coreutils = pkgs.coreutils;
   cat = "${coreutils}/bin/cat";
   chromiumDesktop = "chromium-browser.desktop";
@@ -21,7 +22,7 @@ in rec {
     package = lib.mkDefault pkgs.nix;
     settings = {
       experimental-features = [ "nix-command" "flakes" "repl-flake" ];
-      trusted-users = [ "root" "@admin" "@wheel" "ye" ];
+      trusted-users = [ "root" "@admin" "@wheel" "${userName}" ];
       extra-substituters =
         [ "https://nyx.chaotic.cx/" "https://nix-community.cachix.org" ];
       extra-trusted-public-keys = [
@@ -33,7 +34,7 @@ in rec {
   };
 
   sops = {
-    age.keyFile = "/home/ye/.keys/keys.txt"; # must have no password!
+    age.keyFile = "${homePath}/.keys/keys.txt"; # must have no password!
     defaultSopsFile = ../../../secrets/pc/secrets.json;
     defaultSymlinkPath = "${secretsUserPath}/secrets";
     defaultSecretsMountPoint = "${secretsUserPath}/secrets.d";
@@ -127,7 +128,7 @@ in rec {
   };
 
   systemd.user.services.add_ssh_keys = {
-    Unit.Description = "Add ye SSH keys";
+    Unit.Description = "Add ${userName} SSH keys";
     Unit.After = [
       "plasma-kwallet-pam.service"
       "sops-nix.service"
@@ -146,7 +147,7 @@ in rec {
   };
 
   home = {
-    username = lib.mkDefault "ye";
+    username = lib.mkDefault userName;
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
     stateVersion = lib.mkDefault "24.05";
 

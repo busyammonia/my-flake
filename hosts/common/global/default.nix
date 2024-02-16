@@ -1,4 +1,4 @@
-{ inputs, outputs, lib, pkgs, ... }: {
+{ inputs, outputs, lib, pkgs, ... }: let userName = "ye"; in {
   imports = [
     inputs.home-manager.nixosModules.home-manager
     inputs.chaotic.nixosModules.default
@@ -26,7 +26,7 @@
     package = lib.mkDefault pkgs.nix;
     settings = {
       experimental-features = [ "nix-command" "flakes" "repl-flake" ];
-      trusted-users = [ "root" "@admin" "@wheel" "ye" ];
+      trusted-users = [ "root" "@admin" "@wheel" "${userName}" ];
       extra-substituters =
         [ "https://nyx.chaotic.cx/" "https://nix-community.cachix.org" ];
       extra-trusted-public-keys = [
