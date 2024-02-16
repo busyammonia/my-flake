@@ -44,6 +44,11 @@
           "icon" = "battery-low";
         };
       };
+      "kscreenlockerrc" = {
+        "Daemon" = {
+          "Autolock" = "false";
+        };
+      };
     };
   };
 }
