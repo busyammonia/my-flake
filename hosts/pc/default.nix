@@ -1,4 +1,4 @@
-{ lib, pkgs, inputs, ... }: {
+{ lib, pkgs, inputs, secrets, ... }: {
   imports = [
     inputs.sops-nix.nixosModules.sops
   
@@ -62,5 +62,5 @@
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
   networking.firewall.enable = false;
   networking.hostName = "pc";
-  networking.hostId = lib.mkDefault "8425e349";
+  networking.hostId = lib.mkForce secrets."networking_hostid";
 }
