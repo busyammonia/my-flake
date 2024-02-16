@@ -1,9 +1,8 @@
-{ pkgs, inputs, config, secrets, specialArgsPassthrough, username, ... }:
+{ pkgs, inputs, config, secrets, specialArgsPassthrough, username, homeDirectory, ... }:
 let
   ifTheyExist = groups:
     builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
   homeManagerConfigUserName = "pc";
-  homeDirectory = "/home/${username}";
   precreateUserDirectoryRules = (persistPath: perm: user: group: dirs:
     builtins.map
     (dir: "d ${persistPath}/${user}/${dir} ${perm} ${user} ${group} -") dirs);

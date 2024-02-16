@@ -1,10 +1,9 @@
-{ inputs, lib, pkgs, config, outputs, secrets, username, hostname, ... }:
+{ inputs, lib, pkgs, config, outputs, secrets, username, hostname, homeDirectory, ... }:
 
 let
   userUid = "1000";
   secretsUserPath = "/run/user/${userUid}";
   username = secrets."username";
-  homePath = "/home/${username}";
   coreutils = pkgs.coreutils;
   cat = "${coreutils}/bin/cat";
   chromiumDesktop = "chromium-browser.desktop";
@@ -34,7 +33,7 @@ in rec {
   };
 
   sops = {
-    age.keyFile = "${homePath}/.keys/keys.txt"; # must have no password!
+    age.keyFile = "${homeDirectory}/.keys/keys.txt"; # must have no password!
     defaultSopsFile = ../../../secrets/pc/secrets.json;
     defaultSymlinkPath = "${secretsUserPath}/secrets";
     defaultSecretsMountPoint = "${secretsUserPath}/secrets.d";
@@ -64,7 +63,7 @@ in rec {
   home.sessionPath = [
     "/usr/local/bin"
     "/usr/local/zfs/bin"
-    "${homePath}/bin"
+    "${homeDirectory}/bin"
     "${home.sessionVariables.XDG_BIN_HOME}"
   ];
 
@@ -148,7 +147,7 @@ in rec {
 
   home = {
     username = lib.mkDefault username;
-    homeDirectory = lib.mkDefault "/home/${config.home.username}";
+    homeDirectory = lib.mkDefault homeDirectory;
     stateVersion = lib.mkDefault "24.05";
 
     persistence = {
