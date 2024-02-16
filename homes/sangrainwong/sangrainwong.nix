@@ -1,4 +1,4 @@
-{ inputs, outputs, pkgs, lib, ... }: {
+{ inputs, outputs, pkgs, lib, secrets, ... }: {
   imports = [
     ./global
 
@@ -27,7 +27,7 @@
       "kdeglobals"."KDE"."AnimationDurationFactor" = 0;
       "kxkbrc"."Layout" = {
         "DisplayNames" = ",";
-        "LayoutList" = "us,ru";
+        "LayoutList" = secrets."xkb_layout";
         "Options" = "grp:alt_shift_toggle";
         "ResetOldOptions" = true;
         "Use" = true;
