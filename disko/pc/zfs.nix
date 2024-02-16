@@ -247,7 +247,7 @@ in {
           listsnapshots = "on";
         };
 
-        mountpoint = "/mnt";
+        mountpoint = "/mnt/hdd";
 
         datasets = {
           reservation = {
@@ -264,50 +264,17 @@ in {
 
           share = {
             type = "zfs_fs";
-            mountpoint = "/Share";
+            mountpoint = "/share";
             options = {
-              mountpoint = "/Share";
+              mountpoint = "/share";
             };
           };
 
-          trash = {
+          default = {
             type = "zfs_fs";
-            mountpoint = "/Trash";
+            mountpoint = "/";
             options = {
-              mountpoint = "/Trash";
-              compression = "zstd-15";
-            };
-          };
-
-          vm = {
-            type = "zfs_fs";
-            mountpoint = "/VM";
-            options = {
-              mountpoint = "/VM";
-            };
-          };
-
-          downloads = {
-            type = "zfs_fs";
-            mountpoint = "/Downloads";
-            options = {
-              mountpoint = "/Downloads";
-            };
-          };
-
-          torrents = {
-            type = "zfs_fs";
-            mountpoint = "/Torrents";
-            options = {
-              mountpoint = "/Torrents";
-            };
-          };
-
-          other = {
-            type = "zfs_fs";
-            mountpoint = "/Other";
-            options = {
-              mountpoint = "/Other";
+              mountpoint = "/";
             };
           };
         };
