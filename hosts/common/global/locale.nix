@@ -1,23 +1,20 @@
-{ lib, ... }: {
+{ lib, secrets, ... }: {
   i18n = {
-    defaultLocale = lib.mkDefault "en_US.UTF-8";
+    defaultLocale = lib.mkForce secrets."default_locale";
     extraLocaleSettings = {
-      LC_MESSAGES = lib.mkDefault "en_US.UTF-8";
-      LC_ADDRESS = lib.mkDefault "ru_RU.UTF-8";
-      LC_CTYPE = lib.mkDefault "ru_RU.UTF-8";
-      LC_IDENTIFICATION = lib.mkDefault "ru_RU.UTF-8";
-      LC_MEASUREMENT = lib.mkDefault "ru_RU.UTF-8";
-      LC_MONETARY = lib.mkDefault "ru_RU.UTF-8";
-      LC_NAME = lib.mkDefault "ru_RU.UTF-8";
-      LC_NUMERIC = lib.mkDefault "ru_RU.UTF-8";
-      LC_PAPER = lib.mkDefault "ru_RU.UTF-8";
-      LC_TELEPHONE = lib.mkDefault "ru_RU.UTF-8";
-      LC_TIME = lib.mkDefault "ru_RU.UTF-8";
+      LC_MESSAGES = lib.mkForce secrets."default_locale";
+      LC_ADDRESS = lib.mkForce secrets."specificstuff_locale";
+      LC_CTYPE = lib.mkForce secrets."specificstuff_locale";
+      LC_IDENTIFICATION = lib.mkForce secrets."specificstuff_locale";
+      LC_MEASUREMENT = lib.mkForce secrets."specificstuff_locale";
+      LC_MONETARY = lib.mkForce secrets."specificstuff_locale";
+      LC_NAME = lib.mkForce secrets."specificstuff_locale";
+      LC_NUMERIC = lib.mkForce secrets."specificstuff_locale";
+      LC_PAPER = lib.mkForce secrets."specificstuff_locale";
+      LC_TELEPHONE = lib.mkForce secrets."specificstuff_locale";
+      LC_TIME = lib.mkForce secrets."specificstuff_locale";
     };
-    supportedLocales = lib.mkDefault [
-      "en_US.UTF-8/UTF-8"
-      "ru_RU.UTF-8/UTF-8"
-    ];
+    supportedLocales = lib.mkForce secrets."supported_locales";
   };
-  time.timeZone = lib.mkDefault "Europe/Moscow";
+  time.timeZone = lib.mkForce secrets."timezone";
 }
