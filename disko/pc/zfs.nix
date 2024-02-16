@@ -1,4 +1,4 @@
-{ disks, pcName, ... }:
+{ disks, hostname, ... }:
 let
   addSuffix = (maxLength: sep: suffix: str: builtins.substring 0 maxLength (builtins.substring 0 (maxLength - builtins.stringLength sep - builtins.stringLength suffix) str + sep + suffix));
   zfsPoolName = (sep: suffix: str: str + sep + suffix);
@@ -11,15 +11,15 @@ let
   labelCrypt = addSuffix 64 "-" signZfs;
   labelZfsPool = zfsPoolName "-";
   hddName = "hdd";
-  hddNameWithPc = "${pcName}-${hddName}";
+  hddNameWithPc = "${hostname}-${hddName}";
   main = {
     partlabelBioscompat = signBios;
     partlabelEfi = signESP;
     partlabelCrypt = signCrypt;
-    labelBioscompat = labelBioscompat pcName;
-    labelEfi = labelEfi pcName;
-    labelCrypt = labelCrypt pcName;
-    labelZfsPool = labelZfsPool "zroot" pcName;
+    labelBioscompat = labelBioscompat hostname;
+    labelEfi = labelEfi hostname;
+    labelCrypt = labelCrypt hostname;
+    labelZfsPool = labelZfsPool "zroot" hostname;
   };
   hdd = let name = hddNameWithPc; in {
     partlabelBioscompat = signBios;
@@ -28,12 +28,12 @@ let
     labelBioscompat = labelBioscompat name;
     labelEfi = labelEfi name;
     labelCrypt = labelCrypt name;
-    labelZfsPool = labelZfsPool "zdata" pcName;
+    labelZfsPool = labelZfsPool "zdata" hostname;
   };
 in {
   disko.devices = {
     disk = {
-      "${pcName}-main" = {
+      "${hostname}-main" = {
         type = "disk";
         device = builtins.elemAt disks 0;
         content = {
