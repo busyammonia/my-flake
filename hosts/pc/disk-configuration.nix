@@ -47,8 +47,8 @@
       grub = {
         gfxpayloadEfi = "keep";
         gfxpayloadBios = "keep";
-        gfxmodeEfi = "2560x1440";
-        gfxmodeBios = "2560x1440";
+        gfxmodeEfi = "${secrets.resolution.width}x${secrets.resolution.height}";
+        gfxmodeBios = "${secrets.resolution.width}x${secrets.resolution.height}";
         enable = true;
         efiSupport = true;
         device = "nodev";
