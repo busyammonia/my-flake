@@ -1,4 +1,4 @@
-{ inputs, lib, pkgs, config, outputs, secrets, username, hostname, homeDirectory, ... }:
+{ inputs, lib, pkgs, config, outputs, secrets, username, hostname, homeDirectory, configName, ... }:
 
 let
   userUid = "1000";
@@ -34,7 +34,7 @@ in rec {
 
   sops = {
     age.keyFile = "${homeDirectory}/.keys/keys.txt"; # must have no password!
-    defaultSopsFile = ../../../secrets/pc/secrets.json;
+    defaultSopsFile = ../../../secrets/${configName}/secrets.json;
     defaultSymlinkPath = "${secretsUserPath}/secrets";
     defaultSecretsMountPoint = "${secretsUserPath}/secrets.d";
     secrets = {

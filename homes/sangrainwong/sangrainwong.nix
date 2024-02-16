@@ -14,7 +14,7 @@
     ./features/dev
     ./features/shell
 
-    ./features/pc
+    ./features/sangrainwong
   ];
 
   programs.plasma = {

@@ -1,12 +1,12 @@
 keys:
   - &users:
-    - &ye: age1gvxnr97tvkjumsmgdpyw5s22n0fvj7k44slv3nl6rs87yx9xaf4qxxw40s
+    - &owner: age1gvxnr97tvkjumsmgdpyw5s22n0fvj7k44slv3nl6rs87yx9xaf4qxxw40s
   - &hosts:
-    - &pc: age1vn70yw2796zrgmlfnjjee6zldxvrsa2jytx4u9phmtdxf5zmjy2s54maed
+    - &sangrainwong: age1vn70yw2796zrgmlfnjjee6zldxvrsa2jytx4u9phmtdxf5zmjy2s54maed
 
 creation_rules:
-  - path_regex: secrets/pc/secrets\.(yaml|json|env|ini)$
+  - path_regex: secrets/sangrainwong/secrets\.(yaml|json|env|ini)$
     key_groups:
     - age:
-      - *ye
-      - *pc
+      - *owner
+      - *sangrainwong

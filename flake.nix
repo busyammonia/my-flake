@@ -57,17 +57,19 @@
       formatter = forEachSystem (pkgs: pkgs.nixpkgs-fmt);
 
       nixosConfigurations = {
-        pc = let
+        sangrainwong = let
+          configName = "sangrainwong";
           _specialArgs = rec {
             inherit inputs outputs self;
             secrets = builtins.fromJSON
-              (builtins.readFile "${self}/secrets/pc/evalsecrets.json");
+              (builtins.readFile "${self}/secrets/${configName}/evalsecrets.json");
             hostname = secrets."hostname";
             username = secrets."username";
             homeDirectory = secrets."home_directory";
+            inherit configName;
           };
         in lib.nixosSystem {
-          modules = [ ./hosts/pc ];
+          modules = [ ./hosts/${configName} ];
           specialArgs = _specialArgs // {
             specialArgsPassthrough = _specialArgs;
           };

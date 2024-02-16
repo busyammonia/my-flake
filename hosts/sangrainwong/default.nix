@@ -1,7 +1,9 @@
-{ lib, pkgs, inputs, secrets, username, hostname, ... }: let homeManagerConfigUserName = "pc"; in {
+{ lib, pkgs, inputs, secrets, username, hostname, configName, ... }:
+let homeManagerConfigUserName = configName;
+in {
   imports = [
     inputs.sops-nix.nixosModules.sops
-  
+
     ./hardware-configuration.nix
 
     ../common/global
@@ -35,12 +37,8 @@
   services.xserver.desktopManager.plasma5.enable = true;
   security.pam.services.login.enableKwallet = true;
 
-  users.groups.keys = {};
-  systemd.tmpfiles = {
-    rules = [
-      "d /persist/keys 0750 root keys -"
-    ];
-  };
+  users.groups.keys = { };
+  systemd.tmpfiles = { rules = [ "d /persist/keys 0750 root keys -" ]; };
 
   programs.adb.enable = true;
 
@@ -49,15 +47,12 @@
     setXAuthLocation = true;
   };
 
-  environment = {
-    sessionVariables = {
-      SSH_ASKPASS_REQUIRE="prefer";
-    };
-  };
+  environment = { sessionVariables = { SSH_ASKPASS_REQUIRE = "prefer"; }; };
 
   systemd.enableEmergencyMode = true;
   boot.initrd.systemd.emergencyAccess = true;
-  boot.kernelParams = [ "rescue" "boot.shell_on_fail" "systemd.setenv=SYSTEMD_SULOGIN_FORCE=1" ];
+  boot.kernelParams =
+    [ "rescue" "boot.shell_on_fail" "systemd.setenv=SYSTEMD_SULOGIN_FORCE=1" ];
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
   networking.firewall.enable = false;
