@@ -61,6 +61,6 @@
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
   networking.firewall.enable = false;
-  networking.hostName = "pc";
+  networking.hostName = lib.mkForce secrets."hostname";
   networking.hostId = lib.mkForce secrets."networking_hostid";
 }
