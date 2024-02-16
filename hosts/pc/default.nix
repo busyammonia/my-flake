@@ -1,4 +1,4 @@
-{ lib, pkgs, inputs, secrets, ... }: let homeManagerConfigUserName = "pc"; in {
+{ lib, pkgs, inputs, secrets, username, hostname, ... }: let homeManagerConfigUserName = "pc"; in {
   imports = [
     inputs.sops-nix.nixosModules.sops
   
@@ -61,6 +61,6 @@
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
   networking.firewall.enable = false;
-  networking.hostName = lib.mkForce secrets."hostname";
+  networking.hostName = hostname;
   networking.hostId = lib.mkForce secrets."networking_hostid";
 }
