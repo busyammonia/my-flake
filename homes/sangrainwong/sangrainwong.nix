@@ -1,4 +1,4 @@
-{ inputs, outputs, pkgs, lib, secrets, ... }: {
+{ inputs, outputs, pkgs, lib, secrets, configName, ... }: {
   imports = [
     ./global
 
@@ -14,7 +14,7 @@
     ./features/dev
     ./features/shell
 
-    ./features/sangrainwong
+    ./features/${configName}
   ];
 
   programs.plasma = {

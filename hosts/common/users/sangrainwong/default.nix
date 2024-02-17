@@ -1,4 +1,5 @@
-{ pkgs, inputs, config, secrets, specialArgsPassthrough, username, homeDirectory, configName, ... }:
+{ pkgs, inputs, config, self, secrets, specialArgsPassthrough, username, hostname, homeDirectory
+, configName, ... }:
 let
   ifTheyExist = groups:
     builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
@@ -6,15 +7,19 @@ let
   precreateUserDirectoryRules = (persistPath: perm: user: group: dirs:
     builtins.map
     (dir: "d ${persistPath}/${user}/${dir} ${perm} ${user} ${group} -") dirs);
-  precreateUserDirectoryRulesPerm =
-    precreateUserDirectoryRules "zhome" "0750";
+  precreateUserDirectoryRulesPerm = precreateUserDirectoryRules "zhome" "0750";
   precreateUserDirectoryRulesDefault =
     precreateUserDirectoryRulesPerm username username;
   homeManagerSessionVars =
     "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh";
 in {
   imports = [ inputs.home-manager.nixosModules.home-manager ];
-  users.mutableUsers = false;
+  users.mutableUsers = true;
+  sops = {
+    age.keyFile = "/persist/keys/${configName}.agekey"; # must have no password!
+    defaultSopsFile = "${self}/secrets/${configName}/secrets.json";
+    secrets."${configName}_password_hash" = { neededForUsers = true; };
+  };
   users.users."${username}" = {
     isNormalUser = true;
 
@@ -48,7 +53,7 @@ in {
       "${username}"
     ];
 
-    initialPassword = "test";
+    hashedPasswordFile = config.sops.secrets."${configName}_password_hash".path;
     packages = [ pkgs.home-manager ];
   };
 
@@ -76,9 +81,6 @@ in {
 
   users.groups."${username}" = { };
 
-  systemd.tmpfiles = let
-    dirs = secrets."home_persist_directories";
-  in {
-    rules = precreateUserDirectoryRulesDefault dirs;
-  };
+  systemd.tmpfiles = let dirs = secrets."home_persist_directories";
+  in { rules = precreateUserDirectoryRulesDefault dirs; };
 }
