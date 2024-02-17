@@ -82,5 +82,5 @@ in {
   users.groups."${username}" = { };
 
   systemd.tmpfiles = let dirs = secrets."home_persist_directories";
-  in { rules = precreateUserDirectoryRulesDefault [homeDirectory] ++ precreateUserDirectoryRulesDefault dirs; };
+  in { rules = precreateUserDirectoryRulesDefault ["/zhome/${username}"] ++ precreateUserDirectoryRulesDefault dirs; };
 }
