@@ -12,6 +12,7 @@
         "/var/lib/systemd/coredump"
         "/var/lib/waydroid"
         "/var/lib/libvirt"
+        "/var/lib/chrony"
         "/etc/libvirt"
         "/etc/NetworkManager/system-connections"
         "/var/cache/smartdns"
