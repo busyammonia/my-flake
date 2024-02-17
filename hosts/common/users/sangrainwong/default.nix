@@ -7,9 +7,9 @@ let
   precreateUserDirectoryRules = (persistPath: perm: user: group: dirs:
     builtins.map
     (dir: "d ${persistPath}/${user}/${dir} ${perm} ${user} ${group} -") dirs);
-  precreateUserDirectoryRulesPerm = precreateUserDirectoryRules "zhome" "0750";
+  precreateUserDirectoryRulesPerm = precreateUserDirectoryRules "/zhome" "0750";
   precreateUserDirectoryRulesDefault =
-    precreateUserDirectoryRulesPerm username username;
+    precreateUserDirectoryRulesPerm username "users";
   homeManagerSessionVars =
     "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh";
 in {
