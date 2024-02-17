@@ -6,6 +6,15 @@
     telegram-desktop
     pkgs.inputs.nixpkgs-master.pdfannots2json
     cntr
+
+    git-crypt
+    transcrypt
+    git-secret
+    agebox
+    sops
+    ssh-to-age
+    age
+    passphrase2pgp
   ];
 
   services.gpg-agent = {
