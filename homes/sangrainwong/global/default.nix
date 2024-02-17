@@ -151,7 +151,7 @@ in rec {
     stateVersion = lib.mkDefault "24.05";
 
     persistence = {
-      "/zhome/${config.home.username}" = {
+      "/zhome/${username}" = {
         directories = secrets."home_persist_directories";
         allowOther = true;
       };
