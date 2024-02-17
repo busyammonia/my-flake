@@ -90,9 +90,6 @@
         # Where possible, tell the network interface's hardware to timestamp
         # exactly when packets are received/sent to increase accuracy.
         hwtimestamp *
-
-        driftfile /var/lib/chrony/drift
-        rtcfile /var/lib/chrony/rtc
       '';
     };
   };
