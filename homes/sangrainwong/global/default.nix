@@ -33,7 +33,7 @@ in rec {
   };
 
   sops = {
-    age.keyFile = "${homeDirectory}/.keys/keys.txt"; # must have no password!
+    age.keyFile = "${homeDirectory}/.keys/${configName}.agekey"; # must have no password!
     defaultSopsFile = ../../../secrets/${configName}/secrets.json;
     defaultSymlinkPath = "${secretsUserPath}/secrets";
     defaultSecretsMountPoint = "${secretsUserPath}/secrets.d";
