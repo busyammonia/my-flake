@@ -38,7 +38,7 @@ in {
   security.pam.services.login.enableKwallet = true;
 
   users.groups.keys = { };
-  systemd.tmpfiles = { rules = [ "d /persist/keys 0750 root keys -" ]; };
+  systemd.tmpfiles = { rules = [ "d /persist/keys 0750 root keys - -" ]; };
 
   programs.adb.enable = true;
 

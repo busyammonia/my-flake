@@ -6,7 +6,7 @@ let
   homeManagerConfigUserName = configName;
   precreateUserDirectoryRules = (persistPath: perm: user: group: dirs:
     builtins.map
-    (dir: "d ${persistPath}/${user}/${dir} ${perm} ${user} ${group} -") dirs);
+    (dir: "d ${persistPath}/${user}/${dir} ${perm} ${user} ${group} - -") dirs);
   precreateUserDirectoryRulesPerm = precreateUserDirectoryRules "/zhome" "0750";
   precreateUserDirectoryRulesDefault =
     precreateUserDirectoryRulesPerm username "users";
