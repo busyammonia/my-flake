@@ -1,5 +1,5 @@
-{ pkgs, inputs, config, self, secrets, specialArgsPassthrough, username, hostname, homeDirectory
-, configName, ... }:
+{ pkgs, inputs, config, self, secrets, specialArgsPassthrough, username
+, hostname, homeDirectory, configName, ... }:
 let
   ifTheyExist = groups:
     builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
@@ -7,9 +7,18 @@ let
   precreateUserDirectoryRules = (persistPath: perm: user: group: dirs:
     builtins.map
     (dir: "d ${persistPath}/${user}/${dir} ${perm} ${user} ${group} - -") dirs);
-  precreateUserDirectoryRulesPerm = precreateUserDirectoryRules "/zhome" "0750";
+  precreateUserDirectoryRulesPerm = precreateUserDirectoryRules "/zhome" "0700";
   precreateUserDirectoryRulesDefault =
     precreateUserDirectoryRulesPerm username "users";
+  persistPath = "/zhome/${username}";
+  _persist = user: group: perm: dir: {
+    directory = dir;
+    user = user;
+    group = group;
+    mode = perm;
+  };
+  persistDefault = dirs:
+    builtins.map (dir: _persist username username dir.perm dir.path) dirs;
   homeManagerSessionVars =
     "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh";
 in {
@@ -81,6 +90,18 @@ in {
 
   users.groups."${username}" = { };
 
-  systemd.tmpfiles = let dirs = secrets."home_persist_directories";
-  in { rules = precreateUserDirectoryRulesDefault [""] ++ precreateUserDirectoryRulesDefault dirs; };
+  environment.persistence = let
+    dirs = builtins.map (x: {
+      directory = x;
+      mode = "u=rwx,g=,o=";
+    }) secrets."home_persist_directories";
+  in {
+    "${persistPath}" = {
+      hideMounts = true;
+      users."${username}" = {
+        home = homeDirectory;
+        directories = dirs;
+      };
+    };
+  };
 }
