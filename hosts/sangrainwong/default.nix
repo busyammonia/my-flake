@@ -49,6 +49,8 @@ in {
 
   environment = { sessionVariables = { SSH_ASKPASS_REQUIRE = "prefer"; }; };
 
+  fonts.packages = [ pkgs.ttf-ms-win11 ];
+
   systemd.enableEmergencyMode = true;
   boot.initrd.systemd.emergencyAccess = true;
   boot.kernelParams =
