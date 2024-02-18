@@ -49,7 +49,7 @@ in {
 
   environment = { sessionVariables = { SSH_ASKPASS_REQUIRE = "prefer"; }; };
 
-  fonts.packages = [ pkgs.ttf-ms-win11 pkgs.apple-fonts ];
+  fonts.packages = [ pkgs.ttf-ms-win11 pkgs.apple-fonts pkgs.font-awesome pkgs.jetbrains-mono pkgs.noto-fonts-color-emoji pkgs.fira-code pkgs.noto-fonts pkgs.noto-fonts-lgc-plus pkgs.noto-fonts pkgs.gyre-fonts pkgs.dejavu_fonts];
 
   systemd.enableEmergencyMode = true;
   boot.initrd.systemd.emergencyAccess = true;
