@@ -23,6 +23,7 @@ stdenvNoCC.mkDerivation rec {
     runHook preInstall
 
     fd -e ttf -x install -Dm644 "{}" -t $out/share/fonts/truetype/ || true \;
+    fd -e otf -x install -Dm644 "{}" -t $out/share/fonts/opentype/ || true \;
 
     runHook postInstall
   '';
