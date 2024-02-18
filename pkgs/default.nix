@@ -5,4 +5,5 @@
   nohang = pkgs.callPackage ./nohang { };
   zapret = pkgs.callPackage ./zapret { };
   nekoray = pkgs.callPackage ./nekoray { };
+  ttf-ms-win11 = pkgs.callPackage ./ttf-ms-win11 { };
 }
