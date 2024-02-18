@@ -56,6 +56,7 @@
       "kcmfonts" = {
         "General" = {
           "forceFontDPI" = displayForBoot.dpi;
+          "forceFontDPIWayland" = displayForBoot.dpi;
         };
       };
     };
