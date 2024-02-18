@@ -20,24 +20,27 @@
   programs.plasma = {
     enable = true;
 
-    configFile = {
+    configFile = let
+      scale = let
+        multiple = 0.0625;
+        sc = displayForBoot.scale;
+        abs = x: if x < 0 then (-x) else x;
+        roundToInt = x:
+          let diff = abs (x - builtins.floor x);
+          in if diff < 0.5 then builtins.floor x else builtins.ceil x;
+      in multiple * (roundToInt (sc / multiple));
+    in {
       "baloofilerc"."Basic Settings"."Indexing-Enabled" = false;
-      "kwinrc"."Compositing"."LatencyPolicy" = "low";
+      "kwinrc" = {
+        "Compositing" = { "LatencyPolicy" = "low"; };
+        "XWayland" = { "Scale" = scale; };
+      };
       "kdeglobals" = {
         "KDE" = {
           "SingleClick" = "false";
           "AnimationDurationFactor" = 0;
         };
-        "KScreen" = {
-          "ScaleFactor" = let
-            multiple = 6.25;
-            sc = displayForBoot.scale * 100;
-            abs = x: if x < 0 then (-x) else x;
-            roundToInt = x:
-              let diff = abs (x - builtins.floor x);
-              in if diff < 0.5 then builtins.floor x else builtins.ceil x;
-          in multiple * (roundToInt (sc / multiple)); #
-        };
+        "KScreen" = { "ScaleFactor" = scale; };
       };
       "kxkbrc"."Layout" = {
         "DisplayNames" = ",";
