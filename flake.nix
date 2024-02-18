@@ -66,6 +66,10 @@
             hostname = secrets."hostname";
             username = secrets."username";
             homeDirectory = secrets."home_directory";
+            displayForBoot = let x = builtins.elemAt secrets."displays" 0; in x // rec {
+              dpi = builtins.ceil (x.resolution.width / (x.width_mm / 25.4));
+              scale = x.multiplier * (dpi / 96);
+            };
             inherit configName;
           };
         in lib.nixosSystem {
