@@ -49,7 +49,7 @@ in {
 
   environment = { sessionVariables = { SSH_ASKPASS_REQUIRE = "prefer"; }; };
 
-  fonts.packages = [ pkgs.ttf-ms-win11 ];
+  fonts.packages = [ pkgs.ttf-ms-win11 pkgs.apple-fonts ];
 
   systemd.enableEmergencyMode = true;
   boot.initrd.systemd.emergencyAccess = true;
