@@ -44,7 +44,7 @@
     loader = let
       bootWidth = displayForBoot.resolution.width;
       bootHeight = displayForBoot.resolution.height;
-      gfxmode = "${bootWidth}x${bootHeight}";
+      gfxmode = "${builtins.toString bootWidth}x${builtins.toString bootHeight}";
     in {
       grub = {
         gfxpayloadEfi = "keep";
