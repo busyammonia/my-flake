@@ -1,4 +1,4 @@
-{ inputs, outputs, config, pkgs, secrets, hostname, ... }: {
+{ inputs, outputs, config, pkgs, secrets, hostname, displayForBoot, ... }: {
   imports = [ inputs.impermanence.nixosModules.impermanence ];
   programs.fuse.userAllowOther = true;
 
@@ -24,15 +24,9 @@
           mode = "u=rwx,g=rx,o=";
         }
       ];
-      files = [
-        "/etc/adjtime"
-      ];
+      files = [ "/etc/adjtime" ];
     };
-    "etc" = {
-      "machine-id" = {
-        text = secrets."machine_id";
-      };
-    };
+    "etc" = { "machine-id" = { text = secrets."machine_id"; }; };
   };
 
   boot = {
@@ -47,13 +41,16 @@
       };
     };
     supportedFilesystems = [ "zfs" ];
-    loader = {
+    loader = let
+      bootWidth = displayForBoot.resolution.width;
+      bootHeight = displayForBoot.resolution.height;
+      gfxmode = "${bootWidth}x${bootHeight}";
+    in {
       grub = {
         gfxpayloadEfi = "keep";
         gfxpayloadBios = "keep";
-        gfxmodeEfi = "${secrets.resolution.width}x${secrets.resolution.height}";
-        gfxmodeBios =
-          "${secrets.resolution.width}x${secrets.resolution.height}";
+        gfxmodeEfi = gfxmode;
+        gfxmodeBios = gfxmode;
         enable = true;
         efiSupport = true;
         device = "nodev";
