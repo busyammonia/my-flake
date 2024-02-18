@@ -140,7 +140,7 @@ in rec {
       ExecStart = "${pkgs.writeShellScript "add_ssh_keys" ''
         export SSH_ASKPASS="${pkgs.ksshaskpass}/bin/ksshaskpass"
         export SSH_ASKPASS_REQUIRE="prefer"
-        ${pkgs.openssh}/bin/ssh-add ${secretsUserPath}/github.key
+        ${pkgs.openssh}/bin/ssh-add ${builtins.concatStringsSep " " (builtins.map (x: "${secretsUserPath}/${x}") secrets.ssh_keys_to_add_at_boot)}
       ''}";
     };
   };
