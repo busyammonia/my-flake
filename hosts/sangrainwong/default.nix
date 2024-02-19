@@ -49,7 +49,30 @@ in {
 
   environment = { sessionVariables = { SSH_ASKPASS_REQUIRE = "prefer"; }; };
 
-  fonts.packages = [ pkgs.ttf-ms-win11 pkgs.apple-fonts pkgs.font-awesome pkgs.jetbrains-mono pkgs.noto-fonts-color-emoji pkgs.fira-code pkgs.noto-fonts pkgs.noto-fonts-lgc-plus pkgs.noto-fonts pkgs.gyre-fonts pkgs.dejavu_fonts];
+  fonts.packages = [
+    pkgs.ttf-ms-win11
+    pkgs.apple-fonts
+    pkgs.font-awesome
+    pkgs.jetbrains-mono
+    pkgs.noto-fonts-color-emoji
+    pkgs.fira-code
+    pkgs.noto-fonts
+    pkgs.noto-fonts-lgc-plus
+    pkgs.noto-fonts
+    pkgs.gyre-fonts
+    pkgs.dejavu_fonts
+    pkgs.libertine
+    pkgs.libertinus
+    pkgs.open-dyslexic
+    pkgs.roboto
+    pkgs.roboto-serif
+    pkgs.dosemu_fonts
+    pkgs.liberation_ttf
+    pkgs.liberastika
+    pkgs.ubuntu_font_family
+    pkgs.cantarell-fonts
+    pkgs.croscore-fonts
+  ];
 
   systemd.enableEmergencyMode = true;
   boot.initrd.systemd.emergencyAccess = true;
