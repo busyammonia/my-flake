@@ -35,6 +35,7 @@ in {
   services.xserver.enable = true;
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.windowManager.fvwm3.enable = true;
   security.pam.services.login.enableKwallet = true;
 
   users.groups.keys = { };
