@@ -59,6 +59,7 @@
       nixosConfigurations = {
         sangrainwong = let
           configName = "sangrainwong";
+          userConfigName = configName;
           _specialArgs = rec {
             inherit inputs outputs self;
             secrets = builtins.fromJSON
@@ -70,7 +71,7 @@
               dpi = builtins.ceil (x.resolution.width / (x.width_mm / 25.4));
               scale = x.multiplier * (dpi / 96);
             };
-            inherit configName;
+            inherit configName userConfigName;
           };
         in lib.nixosSystem {
           modules = [ ./hosts/${configName} ];
