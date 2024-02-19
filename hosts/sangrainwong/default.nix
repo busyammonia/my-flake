@@ -41,6 +41,16 @@ in {
   users.groups.keys = { };
   systemd.tmpfiles = { rules = [ "d /persist/keys 0750 root keys - -" ]; };
 
+  environment.systemPackages = with pkgs; [
+    stalonetray
+    eww
+    eww-wayland
+
+    # for eww
+    apulse
+    pamixer
+  ];
+
   programs.adb.enable = true;
 
   programs.ssh = {
