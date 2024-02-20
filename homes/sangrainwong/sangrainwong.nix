@@ -21,6 +21,7 @@
     enable = true;
 
     configFile = let
+      hardcodedFontStuff = "-1,5,57,0,0,0,0,0";
       scale = let
         multiple = 0.0625;
         sc = displayForBoot.scale;
@@ -41,6 +42,16 @@
           "AnimationDurationFactor" = 0;
         };
         "KScreen" = { "ScaleFactor" = scale; };
+        "General" = {
+          "fixed" = "${secrets.fonts."fixed".name},${secrets.fonts."fixed".size},${hardcodedFontStuff},${secrets.fonts."fixed".style}";
+          "font" = "${secrets.fonts."general".name},${secrets.fonts."general".size},${hardcodedFontStuff},${secrets.fonts."general".style}";
+          "menuFont" = "${secrets.fonts."menu".name},${secrets.fonts."menu".size},${hardcodedFontStuff},${secrets.fonts."menu".style}";
+          "smallestReadableFont" = "${secrets.fonts."smallest_readable".name},${secrets.fonts."smallest_readable".size},${hardcodedFontStuff},${secrets.fonts."smallest_readable".style}";
+          "toolBarFont" = "${secrets.fonts."toolbar".name},${secrets.fonts."toolbar".size},${hardcodedFontStuff},${secrets.fonts."toolbar".style}";
+        };
+        "WM" = {
+          "activeFont" = "${secrets.fonts."window_title".name},${secrets.fonts."window_title".size},${hardcodedFontStuff},${secrets.fonts."window_title".style}";
+        };
       };
       "kxkbrc"."Layout" = {
         "DisplayNames" = ",";
