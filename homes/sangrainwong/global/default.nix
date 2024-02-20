@@ -51,7 +51,7 @@ in rec {
   home.sessionVariables = {
     __MYFLAKE1__ = "yes";
     __MYFLAKE__ = "yes";
-    _MY_SCALE = "${lib.toString displayForBoot.scale}";
+    _MY_SCALE = "${builtins.toString displayForBoot.scale}";
     TZ = secrets."env_TZ";
     EDITOR = "${pkgs.vscode}/bin/code -w";
     XDG_CACHE_HOME = "$HOME/.cache";
