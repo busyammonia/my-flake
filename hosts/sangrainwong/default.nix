@@ -1,4 +1,5 @@
-{ lib, pkgs, inputs, secrets, username, hostname, configName, ... }:
+{ lib, pkgs, inputs, secrets, username, hostname, configName, homeDirectory, ...
+}:
 let homeManagerConfigUserName = configName;
 in {
   imports = [
@@ -39,7 +40,12 @@ in {
   security.pam.services.login.enableKwallet = true;
 
   users.groups.keys = { };
-  systemd.tmpfiles = { rules = [ "d /persist/keys 0750 root keys - -" ]; };
+  systemd.tmpfiles = {
+    rules = [
+      "d /persist/keys 0750 root keys - -"
+      "d ${homeDirectory} 0700 ${username} users - -"
+    ];
+  };
 
   environment.systemPackages = with pkgs; [
     stalonetray
