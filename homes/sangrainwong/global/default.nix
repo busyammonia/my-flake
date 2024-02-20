@@ -1,4 +1,4 @@
-{ inputs, lib, pkgs, config, outputs, secrets, username, hostname, homeDirectory, configName, ... }:
+{ inputs, lib, pkgs, config, outputs, secrets, username, hostname, homeDirectory, configName, displayForBoot, ... }:
 
 let
   userUid = "1000";
@@ -51,6 +51,7 @@ in rec {
   home.sessionVariables = {
     __MYFLAKE1__ = "yes";
     __MYFLAKE__ = "yes";
+    _MY_SCALE = "${displayForBoot.scale}";
     TZ = secrets."env_TZ";
     EDITOR = "${pkgs.vscode}/bin/code -w";
     XDG_CACHE_HOME = "$HOME/.cache";
