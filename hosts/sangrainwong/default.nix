@@ -44,7 +44,7 @@ in {
     rules = [
       "d /persist/keys 0750 root keys - -"
       "d ${homeDirectory} 0700 ${username} users - -"
-    ];
+    ] ++ builtins.map (elem: "d ${elem} 0700 ${username} users - -") secrets."home_fixperm_dirs";
   };
 
   environment.systemPackages = with pkgs; [
