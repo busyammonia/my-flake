@@ -26,14 +26,14 @@
         sc = displayForBoot.scale;
         abs = x: if x < 0 then (-x) else x;
         roundToInt = x:
-          let diff = abs (x - builtins.floor x);
+          let diff = abs (x - builtins.floor x - 0.001);
           in if diff < 0.5 then builtins.floor x else builtins.ceil x;
       in multiple * (roundToInt (sc / multiple));
     in {
       "baloofilerc"."Basic Settings"."Indexing-Enabled" = false;
       "kwinrc" = {
         "Compositing" = { "LatencyPolicy" = "low"; };
-        "XWayland" = { "Scale" = scale; };
+        "Xwayland" = { "Scale" = scale; };
       };
       "kdeglobals" = {
         "KDE" = {
