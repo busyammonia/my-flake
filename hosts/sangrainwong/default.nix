@@ -71,11 +71,12 @@ in {
     pkgs.apple-fonts
     pkgs.font-awesome
     pkgs.jetbrains-mono
-    pkgs.noto-fonts-color-emoji
     pkgs.fira-code
     pkgs.noto-fonts
+    pkgs.noto-fonts-color-emoji
     pkgs.noto-fonts-lgc-plus
-    pkgs.noto-fonts
+    pkgs.noto-fonts-cjk-sans
+    pkgs.noto-fonts-cjk-serif
     pkgs.gyre-fonts
     pkgs.dejavu_fonts
     pkgs.libertine
