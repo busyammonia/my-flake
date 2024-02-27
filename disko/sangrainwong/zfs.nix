@@ -44,34 +44,22 @@ in {
           type = "gpt";
           efiGptPartitionFirst = false;
           partitions = {
-            mbr-gap = {
+            TOW-BOOT-FI = {
               priority = 1;
-              type = "EF02";
-              size = "8M";
-              name = "mbr-gap";
-              hybrid = {
-                mbrPartitionType = "0x83";
-                mbrBootableFlag = false;
-              };
-            };
-            mbr-boot = {
-              priority = 2;
               type = "EF00";
-              size = "512M";
-              name = main.partlabelBioscompat;
+              size = "+32M";
               content = {
                 type = "filesystem";
                 format = "vfat";
-                extraArgs = [ "-n ${main.labelBioscompat}" ];
-                mountpoint = "/boot";
+                mountpoint = null;
               };
               hybrid = {
                 mbrPartitionType = "0x0c";
-                mbrBootableFlag = true;
+                mbrBootableFlag = false;
               };
             };
             ESP = {
-              priority = 3;
+              priority = 2;
               size = "512M";
               type = "EF00";
               name = main.partlabelEfi;
@@ -83,6 +71,7 @@ in {
               };
             };
             root = {
+              priority = 3;
               size = "100%";
               type = "8300";
               name = main.partlabelCrypt;
@@ -117,28 +106,12 @@ in {
               size = "8M";
               name = "mbr-gap";
               hybrid = {
-                mbrPartitionType = "0x83";
-                mbrBootableFlag = false;
-              };
-            };            
-            mbr-boot = {
-              priority = 2;
-              type = "EF00";
-              size = "512M";
-              name = hdd.partlabelBioscompat;
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                extraArgs = [ "-n ${hdd.labelBioscompat}" ];
-                mountpoint = "/boot_hdd";
-              };
-              hybrid = {
-                mbrPartitionType = "0x0c";
+                mbrPartitionType = "0x0";
                 mbrBootableFlag = true;
               };
             };
             ESP = {
-              priority = 3;
+              priority = 2;
               size = "512M";
               type = "EF00";
               name = hdd.partlabelEfi;
@@ -146,7 +119,7 @@ in {
                 type = "filesystem";
                 format = "vfat";
                 extraArgs = [ "-n ${hdd.labelEfi}" ];
-                mountpoint = "/boot_hdd/efi";
+                mountpoint = "/boot_hdd";
               };
             };
             root = {

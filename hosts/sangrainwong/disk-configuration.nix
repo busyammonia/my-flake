@@ -40,12 +40,27 @@
         allowDiscards = true;
       };
       systemd.enable = true;
-      supportedFilesystems = [ "zfs" "vfat" "exfat" "f2fs" "ext2" "ext3" "ext4" "xfs" "ntfs" "btrfs" "fat32" "fat16" "fat8" ];
+      supportedFilesystems = [
+        "zfs"
+        "vfat"
+        "exfat"
+        "f2fs"
+        "ext2"
+        "ext3"
+        "ext4"
+        "xfs"
+        "ntfs"
+        "btrfs"
+        "fat32"
+        "fat16"
+        "fat8"
+      ];
     };
     loader = let
       bootWidth = displayForBoot.resolution.width;
       bootHeight = displayForBoot.resolution.height;
-      gfxmode = "${builtins.toString bootWidth}x${builtins.toString bootHeight}";
+      gfxmode =
+        "${builtins.toString bootWidth}x${builtins.toString bootHeight}";
     in {
       grub = {
         gfxpayloadEfi = "keep";
@@ -74,9 +89,12 @@
             halt
           }
         '';
+        efiInstallAsRemovable = true;
       };
-      efi.efiSysMountPoint = "/boot/efi";
-      efi.canTouchEfiVariables = true;
+      efi = {
+        canTouchEfiVariables = false;
+        efiSysMountPoint = "/boot";
+      };
     };
   };
 
@@ -104,12 +122,6 @@
     };
 
     "/boot" = {
-      device = "/dev/disk/by-partlabel/disk-${hostname}-main-BIOS";
-      fsType = "vfat";
-      neededForBoot = true;
-    };
-
-    "/boot/efi" = {
       device = "/dev/disk/by-partlabel/disk-${hostname}-main-ESP";
       fsType = "vfat";
       neededForBoot = true;
