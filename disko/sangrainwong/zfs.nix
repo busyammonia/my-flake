@@ -44,17 +44,17 @@ in {
           type = "gpt";
           efiGptPartitionFirst = false;
           partitions = {
-            grub = {
+            mbr-gap = {
               priority = 1;
               type = "EF02";
               size = "8M";
-              name = "grub";
+              name = "mbr-gap";
               hybrid = {
                 mbrPartitionType = "0x83";
                 mbrBootableFlag = false;
               };
             };
-            compat = {
+            mbr-boot = {
               priority = 2;
               type = "EF00";
               size = "512M";
@@ -111,17 +111,17 @@ in {
           type = "gpt";
           efiGptPartitionFirst = false;
           partitions = {
-            grub = {
+            mbr-gap = {
               priority = 1;
               type = "EF02";
               size = "8M";
-              name = "grub";
+              name = "mbr-gap";
               hybrid = {
                 mbrPartitionType = "0x83";
                 mbrBootableFlag = false;
               };
             };            
-            compat = {
+            mbr-boot = {
               priority = 2;
               type = "EF00";
               size = "512M";
