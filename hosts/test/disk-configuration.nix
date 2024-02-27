@@ -67,7 +67,15 @@
         gfxmodeBios = gfxmode;
         enable = true;
         efiSupport = true;
-        device = "/dev/vda";
+        mirroredBoots = [
+          {
+            devices = [
+              "/dev/vda"
+              "/dev/vdb"
+            ];
+            path = "/boot";
+          }
+        ];
         copyKernels = true;
         zfsSupport = true;
         memtest86 = {
