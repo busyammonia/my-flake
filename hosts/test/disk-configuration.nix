@@ -56,9 +56,7 @@
         "fat8"
       ];
     };
-    loader = let
-      gfxmode =
-        "800x600";
+    loader = let gfxmode = "800x600";
     in {
       grub = {
         gfxpayloadEfi = "keep";
@@ -69,11 +67,20 @@
         efiSupport = true;
         mirroredBoots = [
           {
-            devices = [
-              "/dev/vda"
-              "/dev/vdb"
-            ];
+            devices = [ "/dev/vda" ];
             path = "/boot";
+          }
+          {
+            devices = [ "nodev" ];
+            path = "/boot";
+          }
+          {
+            devices = [ "/dev/vdb" ];
+            path = "/boot1";
+          }
+          {
+            devices = [ "nodev" ];
+            path = "/boot1";
           }
         ];
         copyKernels = true;
