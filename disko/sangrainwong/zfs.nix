@@ -40,10 +40,20 @@ in {
           type = "gpt";
           efiGptPartitionFirst = false;
           partitions = {
-            compat = {
+            grub = {
               priority = 1;
+              type = "EF02";
+              size = "8M";
+              name = "grub";
+              hybrid = {
+                mbrPartitionType = "0x83";
+                mbrBootableFlag = false;
+              }
+            };
+            compat = {
+              priority = 2;
               type = "EF00";
-              size = "32M";
+              size = "512M";
               name = main.partlabelBioscompat;
               content = {
                 type = "filesystem";
@@ -53,8 +63,9 @@ in {
               };
               hybrid = {
                 mbrPartitionType = "0x0c";
-                mbrBootableFlag = false;
+                mbrBootableFlag = true;
               };
+              mountpoint = "/boot";
             };
             ESP = {
               priority = 2;
@@ -65,7 +76,7 @@ in {
                 type = "filesystem";
                 format = "vfat";
                 extraArgs = ["-n ${main.labelEfi}"];
-                mountpoint = "/boot";
+                mountpoint = "/boot/efi";
               };
             };
             root = {
@@ -100,7 +111,7 @@ in {
             compat = {
               priority = 1;
               type = "EF00";
-              size = "32M";
+              size = "512M";
               name = hdd.partlabelBioscompat;
               content = {
                 type = "filesystem";
@@ -110,7 +121,7 @@ in {
               };
               hybrid = {
                 mbrPartitionType = "0x0c";
-                mbrBootableFlag = false;
+                mbrBootableFlag = true;
               };
             };
             ESP = {
@@ -122,7 +133,7 @@ in {
                 type = "filesystem";
                 format = "vfat";
                 extraArgs = ["-n ${hdd.labelEfi}"];
-                mountpoint = "/boot_hdd";
+                mountpoint = "/boot_hdd/efi";
               };
             };
             root = {
