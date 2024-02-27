@@ -1,6 +1,9 @@
 { disks, hostname, ... }:
 let
-  addSuffix = (maxLength: sep: suffix: str: builtins.substring 0 maxLength (builtins.substring 0 (maxLength - builtins.stringLength sep - builtins.stringLength suffix) str + sep + suffix));
+  addSuffix = (maxLength: sep: suffix: str:
+    builtins.substring 0 maxLength (builtins.substring 0
+      (maxLength - builtins.stringLength sep - builtins.stringLength suffix) str
+      + sep + suffix));
   zfsPoolName = (sep: suffix: str: str + sep + suffix);
   signBios = "BIOS";
   signESP = "ESP";
@@ -21,7 +24,8 @@ let
     labelCrypt = labelCrypt hostname;
     labelZfsPool = labelZfsPool "zroot" hostname;
   };
-  hdd = let name = hddNameWithPc; in {
+  hdd = let name = hddNameWithPc;
+  in {
     partlabelBioscompat = signBios;
     partlabelEfi = signESP;
     partlabelCrypt = signCrypt;
@@ -48,7 +52,7 @@ in {
               hybrid = {
                 mbrPartitionType = "0x83";
                 mbrBootableFlag = false;
-              }
+              };
             };
             compat = {
               priority = 2;
@@ -58,7 +62,7 @@ in {
               content = {
                 type = "filesystem";
                 format = "vfat";
-                extraArgs = ["-n ${main.labelBioscompat}"];
+                extraArgs = [ "-n ${main.labelBioscompat}" ];
                 mountpoint = null;
               };
               hybrid = {
@@ -75,7 +79,7 @@ in {
               content = {
                 type = "filesystem";
                 format = "vfat";
-                extraArgs = ["-n ${main.labelEfi}"];
+                extraArgs = [ "-n ${main.labelEfi}" ];
                 mountpoint = "/boot/efi";
               };
             };
@@ -106,7 +110,7 @@ in {
         device = builtins.elemAt disks 1;
         content = {
           type = "gpt";
-          efiGptPartitionFirst = false;          
+          efiGptPartitionFirst = false;
           partitions = {
             compat = {
               priority = 1;
@@ -116,7 +120,7 @@ in {
               content = {
                 type = "filesystem";
                 format = "vfat";
-                extraArgs = ["-n ${hdd.labelBioscompat}"];
+                extraArgs = [ "-n ${hdd.labelBioscompat}" ];
                 mountpoint = null;
               };
               hybrid = {
@@ -132,7 +136,7 @@ in {
               content = {
                 type = "filesystem";
                 format = "vfat";
-                extraArgs = ["-n ${hdd.labelEfi}"];
+                extraArgs = [ "-n ${hdd.labelEfi}" ];
                 mountpoint = "/boot_hdd/efi";
               };
             };
@@ -155,7 +159,7 @@ in {
                 };
               };
             };
-          };       
+          };
         };
       };
     };
@@ -276,17 +280,13 @@ in {
           share = {
             type = "zfs_fs";
             mountpoint = "/share";
-            options = {
-              mountpoint = "/share";
-            };
+            options = { mountpoint = "/share"; };
           };
 
           default = {
             type = "zfs_fs";
             mountpoint = "/";
-            options = {
-              mountpoint = "/";
-            };
+            options = { mountpoint = "/"; };
           };
         };
       };
