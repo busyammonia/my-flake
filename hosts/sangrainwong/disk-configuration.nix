@@ -39,8 +39,9 @@
         device = "/dev/disk/by-partlabel/disk-${hostname}-hdd-crypt";
         allowDiscards = true;
       };
+      systemd.enable = true;
+      supportedFilesystems = [ "zfs" "vfat" "exfat" "f2fs" "ext2" "ext3" "ext4" "xfs" "ntfs" "btrfs" "fat32" "fat16" "fat8" ];
     };
-    supportedFilesystems = [ "zfs" ];
     loader = let
       bootWidth = displayForBoot.resolution.width;
       bootHeight = displayForBoot.resolution.height;
@@ -53,7 +54,7 @@
         gfxmodeBios = gfxmode;
         enable = true;
         efiSupport = true;
-        device = "nodev";
+        device = "/dev/vda";
         copyKernels = true;
         zfsSupport = true;
         memtest86 = {
@@ -74,7 +75,7 @@
           }
         '';
       };
-      efi.efiSysMountPoint = "/boot";
+      efi.efiSysMountPoint = "/boot/efi";
       efi.canTouchEfiVariables = true;
     };
   };
@@ -103,6 +104,12 @@
     };
 
     "/boot" = {
+      device = "/dev/disk/by-partlabel/disk-${hostname}-main-BIOS";
+      fsType = "vfat";
+      neededForBoot = true;
+    };
+
+    "/boot/efi" = {
       device = "/dev/disk/by-partlabel/disk-${hostname}-main-ESP";
       fsType = "vfat";
       neededForBoot = true;
