@@ -47,8 +47,8 @@ in {
             TOW-BOOT-FI = {
               priority = 1;
               type = "EF00";
-              start = "1MiB";
-              size = "32MiB";
+              start = "1M";
+              size = "32M";
               content = {
                 type = "filesystem";
                 format = "vfat";
@@ -61,12 +61,12 @@ in {
             };
             grub = {
               priority = 2;
-              size = "8MiB";
+              size = "8M";
               type = "EF02"; # for grub MBR
             };
             ESP = {
               priority = 3;
-              size = "1024MiB";
+              size = "1024M";
               type = "EF00";
               name = main.partlabelEfi;
               content = {
@@ -109,8 +109,8 @@ in {
             TOW-BOOT-FI = {
               priority = 1;
               type = "EF00";
-              start = "1MiB";
-              size = "32MiB";
+              start = "1M";
+              size = "32M";
               content = {
                 type = "filesystem";
                 format = "vfat";
@@ -123,12 +123,12 @@ in {
             };
             grub = {
               priority = 2;
-              size = "8MiB";
+              size = "8M";
               type = "EF02"; # for grub MBR
             };
             ESP = {
               priority = 3;
-              size = "1024MiB";
+              size = "1024M";
               type = "EF00";
               name = main.partlabelEfi;
               content = {
