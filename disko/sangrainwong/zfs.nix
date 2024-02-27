@@ -47,7 +47,8 @@ in {
             TOW-BOOT-FI = {
               priority = 1;
               type = "EF00";
-              size = "+32M";
+              start = "32M";
+              size = "32M";
               content = {
                 type = "filesystem";
                 format = "vfat";
