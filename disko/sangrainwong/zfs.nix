@@ -47,8 +47,8 @@ in {
             TOW-BOOT-FI = {
               priority = 1;
               type = "EF00";
-              start = "128M";
-              size = "128M";
+              start = "1MiB";
+              size = "32MiB";
               content = {
                 type = "filesystem";
                 format = "vfat";
@@ -61,12 +61,12 @@ in {
             };
             grub = {
               priority = 2;
-              size = "32M";
+              size = "8MiB";
               type = "EF02"; # for grub MBR
             };
             ESP = {
               priority = 3;
-              size = "512M";
+              size = "1024MiB";
               type = "EF00";
               name = main.partlabelEfi;
               content = {
@@ -106,29 +106,40 @@ in {
           type = "gpt";
           efiGptPartitionFirst = false;
           partitions = {
-            mbr-gap = {
+            TOW-BOOT-FI = {
               priority = 1;
-              type = "EF02";
-              size = "8M";
-              name = "mbr-gap";
+              type = "EF00";
+              start = "1MiB";
+              size = "32MiB";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/towboot1";
+              };
               hybrid = {
-                mbrPartitionType = "0x0";
+                mbrPartitionType = "0x0c";
                 mbrBootableFlag = true;
               };
             };
-            ESP = {
+            grub = {
               priority = 2;
-              size = "512M";
+              size = "8MiB";
+              type = "EF02"; # for grub MBR
+            };
+            ESP = {
+              priority = 3;
+              size = "1024MiB";
               type = "EF00";
-              name = hdd.partlabelEfi;
+              name = main.partlabelEfi;
               content = {
                 type = "filesystem";
                 format = "vfat";
                 extraArgs = [ "-n ${hdd.labelEfi}" ];
-                mountpoint = "/boot_hdd";
+                mountpoint = "/boot1";
               };
             };
             root = {
+              priority = 4;
               size = "100%";
               type = "8300";
               name = hdd.partlabelCrypt;
