@@ -73,11 +73,11 @@
         mirroredBoots = [
           {
             devices = [ "nodev" ];
-            path = "/mnt/boot";
+            path = "/boot";
           }
           {
             devices = [ "/dev/vda" ];
-            path = "/mnt/boot";
+            path = "/boot";
           }
         ];
         copyKernels = true;
