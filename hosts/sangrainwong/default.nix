@@ -96,6 +96,9 @@ in {
   boot.initrd.systemd.emergencyAccess = true;
   boot.kernelParams =
     [ "rescue" "boot.shell_on_fail" "systemd.setenv=SYSTEMD_SULOGIN_FORCE=1" ];
+  
+  #users.users.root.initialHashedPassword = "$y$j9T$MKOyuIWk5HynAdHbpcyCA1$XjbUUTwjWUi6X/A7BvG/DCnKnqevq1CS7hUZBb81mC1";
+  users.users.root.hashedPassword = ''$y$j9T$MKOyuIWk5HynAdHbpcyCA1$XjbUUTwjWUi6X/A7BvG/DCnKnqevq1CS7hUZBb81mC1'';
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
   networking.firewall.enable = false;
