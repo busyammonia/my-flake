@@ -60,11 +60,12 @@ in {
               };
             };
             grub = {
+              priority = 2;
               size = "32M";
               type = "EF02"; # for grub MBR
             };
             ESP = {
-              priority = 2;
+              priority = 3;
               size = "512M";
               type = "EF00";
               name = main.partlabelEfi;
@@ -76,7 +77,7 @@ in {
               };
             };
             root = {
-              priority = 3;
+              priority = 4;
               size = "100%";
               type = "8300";
               name = main.partlabelCrypt;
