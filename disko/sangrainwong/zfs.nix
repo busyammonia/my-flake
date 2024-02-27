@@ -63,16 +63,15 @@ in {
                 type = "filesystem";
                 format = "vfat";
                 extraArgs = [ "-n ${main.labelBioscompat}" ];
-                mountpoint = null;
+                mountpoint = "/boot";
               };
               hybrid = {
                 mbrPartitionType = "0x0c";
                 mbrBootableFlag = true;
               };
-              mountpoint = "/boot";
             };
             ESP = {
-              priority = 2;
+              priority = 3;
               size = "512M";
               type = "EF00";
               name = main.partlabelEfi;
@@ -112,8 +111,18 @@ in {
           type = "gpt";
           efiGptPartitionFirst = false;
           partitions = {
-            compat = {
+            grub = {
               priority = 1;
+              type = "EF02";
+              size = "8M";
+              name = "grub";
+              hybrid = {
+                mbrPartitionType = "0x83";
+                mbrBootableFlag = false;
+              };
+            };            
+            compat = {
+              priority = 2;
               type = "EF00";
               size = "512M";
               name = hdd.partlabelBioscompat;
@@ -121,7 +130,7 @@ in {
                 type = "filesystem";
                 format = "vfat";
                 extraArgs = [ "-n ${hdd.labelBioscompat}" ];
-                mountpoint = null;
+                mountpoint = "/boot_hdd";
               };
               hybrid = {
                 mbrPartitionType = "0x0c";
@@ -129,7 +138,7 @@ in {
               };
             };
             ESP = {
-              priority = 2;
+              priority = 3;
               size = "512M";
               type = "EF00";
               name = hdd.partlabelEfi;
