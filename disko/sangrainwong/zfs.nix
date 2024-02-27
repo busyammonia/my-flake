@@ -56,7 +56,7 @@ in {
               };
               hybrid = {
                 mbrPartitionType = "0x0c";
-                mbrBootableFlag = false;
+                mbrBootableFlag = true;
               };
             };
             ESP = {
