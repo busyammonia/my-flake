@@ -62,12 +62,40 @@
           userConfigName = configName;
           _specialArgs = rec {
             inherit inputs outputs self;
-            secrets = builtins.fromJSON
-              (builtins.readFile "${self}/secrets/${configName}/evalsecrets.json");
+            secrets = builtins.fromJSON (builtins.readFile
+              "${self}/secrets/${configName}/evalsecrets.json");
             hostname = secrets."hostname";
             username = secrets."username";
             homeDirectory = secrets."home_directory";
-            displayForBoot = let x = builtins.elemAt secrets."displays" 0; in x // rec {
+            displayForBoot = let x = builtins.elemAt secrets."displays" 0;
+            in x // rec {
+              dpi = builtins.ceil (x.resolution.width / (x.width_mm / 25.4));
+              scale = x.multiplier * (dpi / 96.0);
+            };
+            inherit configName userConfigName;
+          };
+        in lib.nixosSystem {
+          modules = [ ./hosts/${configName} ];
+          specialArgs = _specialArgs // {
+            specialArgsPassthrough = _specialArgs;
+          };
+        };
+        test = let
+          configName = "test";
+          userConfigName = configName;
+          _specialArgs = rec {
+            inherit inputs outputs self;
+            secrets = {
+              hostname = "test";
+              username = "test";
+              home_directory = "/home/test";
+              machine_id = "66666666666666666666666666666666";
+            };
+            hostname = secrets."hostname";
+            username = secrets."username";
+            homeDirectory = secrets."home_directory";
+            displayForBoot = let x = builtins.elemAt secrets."displays" 0;
+            in x // rec {
               dpi = builtins.ceil (x.resolution.width / (x.width_mm / 25.4));
               scale = x.multiplier * (dpi / 96.0);
             };
