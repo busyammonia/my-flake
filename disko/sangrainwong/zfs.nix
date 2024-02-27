@@ -68,7 +68,7 @@ in {
                 type = "filesystem";
                 format = "vfat";
                 extraArgs = [ "-n ${main.labelEfi}" ];
-                mountpoint = "/boot/efi";
+                mountpoint = "/boot";
               };
             };
             root = {
