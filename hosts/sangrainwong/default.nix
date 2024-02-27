@@ -1,7 +1,7 @@
 { lib, pkgs, inputs, secrets, username, hostname, configName, homeDirectory, ...
 }:
 let homeManagerConfigUserName = configName;
-in {
+in rec {
   imports = [
     inputs.sops-nix.nixosModules.sops
 
