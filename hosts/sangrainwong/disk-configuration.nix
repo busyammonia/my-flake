@@ -75,10 +75,10 @@
             devices = [ "nodev" ];
             path = "/boot";
           }
-          {
-            devices = [ "/dev/vda" ];
-            path = "/boot";
-          }
+          #{
+          #  devices = [ "/dev/vda" ];
+          #  path = "/boot";
+          #}
         ];
         copyKernels = true;
         zfsSupport = true;
