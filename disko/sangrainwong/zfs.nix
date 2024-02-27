@@ -47,17 +47,21 @@ in {
             TOW-BOOT-FI = {
               priority = 1;
               type = "EF00";
-              start = "32M";
-              size = "32M";
+              start = "128M";
+              size = "128M";
               content = {
                 type = "filesystem";
                 format = "vfat";
-                mountpoint = null;
+                mountpoint = "/towboot";
               };
               hybrid = {
                 mbrPartitionType = "0x0c";
                 mbrBootableFlag = true;
               };
+            };
+            grub = {
+              size = "32M";
+              type = "EF02"; # for grub MBR
             };
             ESP = {
               priority = 2;
