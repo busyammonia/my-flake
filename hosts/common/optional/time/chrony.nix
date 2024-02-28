@@ -5,7 +5,7 @@
       # https://github.com/jauderho/nts-servers/blob/9eab8051749ede4c1014e0c23840f3316e874027/chrony.conf
       ntsServers = [
         # Cloudflare (Anycast)
-        "time.cloudflare.com "
+        "time.cloudflare.com"
 
         # NTP.br (Brazil)
         "a.st1.ntp.br"
