@@ -45,6 +45,8 @@ in rec {
         path = "${secretsUserPath}/github_signing_key.asc";
       };
       "github_ssh_key" = { path = "${secretsUserPath}/github.key"; };
+      "tg_api_id" = { path = "${secretsUserPath}/tg_api_id.txt"; };
+      "tg_api_hash" = { path = "${secretsUserPath}/tg_api_hash.txt"; };
     };
   };
 
@@ -109,6 +111,12 @@ in rec {
     initExtra = ''
       export GITHUB_TOKEN=$(${cat} ${sops.secrets.github_access_token.path})
       export GITHUB_API_TOKEN=$(${cat} ${sops.secrets.github_access_token.path})
+      export tg_api_id=$(${cat} ${sops.secrets.tg_api_id.path})
+      export tg_api_hash=$(${cat} ${sops.secrets.tg_api_hash.path})
+      export TELEGRAM_API_ID=$(${cat} ${sops.secrets.tg_api_id.path})
+      export TELEGRAM_API_HASH=$(${cat} ${sops.secrets.tg_api_hash.path})
+      export TDESKTOP_API_ID=$(${cat} ${sops.secrets.tg_api_id.path})
+      export TDESKTOP_API_HASH=$(${cat} ${sops.secrets.tg_api_hash.path})
     '';
   };
 
