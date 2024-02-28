@@ -9,6 +9,9 @@
 
         # All groups allowed to access hugepages
         "vm.hugetlb_shm_group" = 0;
+
+        "vm.swappiness" = 180;
+        "vm.page-cluster" = 0;
       };
     };
   };
