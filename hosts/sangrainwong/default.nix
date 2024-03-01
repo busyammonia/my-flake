@@ -89,6 +89,14 @@ in rec {
     pkgs.ubuntu_font_family
     pkgs.cantarell-fonts
     pkgs.croscore-fonts
+    pkgs.monocraft
+    pkgs.uni-vga
+    pkgs.terminus_font_ttf
+    pkgs.terminus_font
+    pkgs.ultimate-oldschool-pc-font-pack
+    pkgs.tewi-font
+    pkgs.sudo-font
+    pkgs.ibm-plex
   ];
 
   systemd.enableEmergencyMode = true;
