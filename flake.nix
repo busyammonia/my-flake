@@ -64,8 +64,8 @@
             inherit inputs outputs self;
             secrets = builtins.fromJSON (builtins.readFile
               "${self}/secrets/${configName}/evalsecrets.json");
-            hostname = secrets."hostname";
-            username = secrets."username";
+            hostname = secrets.machine."hostname";
+            username = secrets.os."username";
             homeDirectory = secrets."home_directory";
             displayForBoot = let x = builtins.elemAt secrets."displays" 0;
             in x // rec {
